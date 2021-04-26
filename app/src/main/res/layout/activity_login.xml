@@ -26,7 +26,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_toolbar" />
 
-    <com.wjx.android.wanandroidmvp.Custom.CustomEditText
+    <com.huazi.jdemo.Custom.CustomEditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login" />
 
-    <com.wjx.android.wanandroidmvp.Custom.loading.LoadingView
+    <com.huazi.jdemo.Custom.loading.LoadingView
         android:id="@+id/loading_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

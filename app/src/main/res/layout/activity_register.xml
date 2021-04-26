@@ -25,7 +25,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/register_toolbar" />
 
-    <com.wjx.android.wanandroidmvp.Custom.CustomEditText
+    <com.huazi.jdemo.Custom.CustomEditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@id/username"
         custom:customHint="@string/input_password" />
 
-    <com.wjx.android.wanandroidmvp.Custom.CustomEditText
+    <com.huazi.jdemo.Custom.CustomEditText
         android:id="@+id/repassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/repassword" />
 
-    <com.wjx.android.wanandroidmvp.Custom.loading.LoadingView
+    <com.huazi.jdemo.Custom.loading.LoadingView
         android:id="@+id/loading_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
