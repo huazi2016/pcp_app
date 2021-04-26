@@ -1,19 +1,19 @@
-package com.huazi.jdemo.Custom;
+package com.huazi.jdemo.custom.interpolator;
 
 import android.view.animation.Interpolator;
 
 /**
  * Created with Android Studio.
- * Description:
+ * Description: 弹性动画
  *
  * @author: Wangjianxian
  * @date: 2020/02/20
  * Time: 20:03
  */
-public class CustomScaleInterpolator implements Interpolator {
+public class ElasticScaleInterpolator implements Interpolator {
     private float elasticFactor;
 
-    public CustomScaleInterpolator(float elasticFactor) {
+    public ElasticScaleInterpolator(float elasticFactor) {
         this.elasticFactor = elasticFactor;
     }
 

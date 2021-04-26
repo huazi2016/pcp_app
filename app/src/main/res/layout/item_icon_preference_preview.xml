@@ -3,7 +3,7 @@
     android:layout_width="48dp"
     android:layout_height="48dp">
 
-    <com.huazi.jdemo.Custom.MyColorCircleView
+    <com.huazi.jdemo.custom.MyColorCircleView
         android:id="@+id/iv_preview"
         android:layout_width="44dp"
         android:layout_height="44dp"

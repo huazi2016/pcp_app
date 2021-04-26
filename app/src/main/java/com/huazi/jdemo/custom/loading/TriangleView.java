@@ -1,4 +1,4 @@
-package com.huazi.jdemo.Custom.loading;
+package com.huazi.jdemo.custom.loading;
 
 /**
  * Created with Android Studio.

@@ -1,4 +1,4 @@
-package com.huazi.jdemo.Custom;
+package com.huazi.jdemo.custom;
 
 import android.app.Dialog;
 import android.content.Context;

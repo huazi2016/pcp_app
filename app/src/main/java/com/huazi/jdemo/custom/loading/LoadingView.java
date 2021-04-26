@@ -1,4 +1,4 @@
-package com.huazi.jdemo.Custom.loading;
+package com.huazi.jdemo.custom.loading;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;

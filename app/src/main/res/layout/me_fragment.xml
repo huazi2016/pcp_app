@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="?attr/actionBarSize">
 
-            <com.huazi.jdemo.Custom.userimage.CustomUserAvatar
+            <com.huazi.jdemo.custom.userimage.CustomUserAvatar
                 android:id="@+id/user_imageView"
                 android:layout_width="72dp"
                 android:layout_height="72dp"

@@ -1,4 +1,4 @@
-package com.huazi.jdemo.Custom.header;
+package com.huazi.jdemo.custom.header;
 
 import android.content.Context;
 import android.content.res.TypedArray;

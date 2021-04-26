@@ -13,7 +13,7 @@ import com.afollestad.materialdialogs.color.colorChooser
 import com.blankj.utilcode.util.ColorUtils.getColor
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.huazi.jdemo.Custom.IconPreference
+import com.huazi.jdemo.custom.IconPreference
 import com.huazi.jdemo.R
 import com.huazi.jdemo.base.utils.*
 import com.huazi.jdemo.bean.base.Event

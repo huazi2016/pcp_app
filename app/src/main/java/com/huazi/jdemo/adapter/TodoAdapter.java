@@ -21,7 +21,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.SPUtils;
-import com.huazi.jdemo.Custom.CustomScaleInterpolator;
+import com.huazi.jdemo.custom.CustomScaleInterpolator;
 import com.huazi.jdemo.R;
 import com.huazi.jdemo.base.utils.Constant;
 import com.huazi.jdemo.base.utils.Utils;

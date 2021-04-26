@@ -32,7 +32,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.header.TwoLevelHeader;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
-import com.huazi.jdemo.Custom.interpolator.ElasticScaleInterpolator;
+import com.huazi.jdemo.custom.interpolator.ElasticScaleInterpolator;
 import com.huazi.jdemo.R;
 import com.huazi.jdemo.adapter.ArticleAdapter;
 import com.huazi.jdemo.base.fragment.BaseFragment;

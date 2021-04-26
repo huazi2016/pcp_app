@@ -1,4 +1,4 @@
-package com.huazi.jdemo.Custom.userimage;
+package com.huazi.jdemo.custom.userimage;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

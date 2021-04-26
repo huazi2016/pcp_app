@@ -20,7 +20,7 @@ import androidx.core.graphics.ColorUtils;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.huazi.jdemo.Custom.userimage.CustomUserAvatar;
+import com.huazi.jdemo.custom.userimage.CustomUserAvatar;
 import com.huazi.jdemo.R;
 import com.huazi.jdemo.base.fragment.BaseFragment;
 import com.huazi.jdemo.base.utils.Constant;

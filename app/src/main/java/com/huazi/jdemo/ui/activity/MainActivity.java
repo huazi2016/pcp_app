@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
-import com.huazi.jdemo.Custom.loading.LoadingView;
+import com.huazi.jdemo.custom.loading.LoadingView;
 import com.huazi.jdemo.R;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;

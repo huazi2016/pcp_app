@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.huazi.jdemo.Custom.loading.LoadingView;
+import com.huazi.jdemo.custom.loading.LoadingView;
 import com.huazi.jdemo.R;
 import com.huazi.jdemo.base.activity.BaseActivity;
 import com.huazi.jdemo.base.utils.Constant;

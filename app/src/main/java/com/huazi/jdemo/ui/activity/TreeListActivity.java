@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.huazi.jdemo.Custom.loading.LoadingView;
+import com.huazi.jdemo.custom.loading.LoadingView;
 import com.huazi.jdemo.R;
 import com.huazi.jdemo.adapter.TreeArticleAdapter;
 import com.huazi.jdemo.base.activity.BaseActivity;
