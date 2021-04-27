@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.Utils;
 import com.kingja.loadsir.core.LoadSir;
 import com.huazi.jdemo.base.callback.ErrorCallback;
 import com.huazi.jdemo.base.utils.Constant;
+import com.tencent.mmkv.MMKV;
 
 import org.litepal.LitePal;
 import org.litepal.LitePalApplication;
@@ -19,13 +20,15 @@ import org.litepal.LitePalApplication;
  * @date: 2019/12/18
  * Time: 21:26
  */
-public class WanAndroidApplication extends LitePalApplication {
+public class MyApp extends LitePalApplication {
     @Override
     public void onCreate() {
         super.onCreate();
         LitePal.initialize(this);
         Utils.init(this);
         initMode();
+        //初始化轻量级存储框架-mmkv
+        MMKV.initialize(getApplicationContext());
         LoadSir.beginBuilder()
                 .addCallback(new ErrorCallback())
                 .commit();

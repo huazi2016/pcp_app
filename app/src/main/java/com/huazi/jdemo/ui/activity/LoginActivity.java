@@ -121,14 +121,15 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
 
     @OnClick(R.id.login)
     public void login() {
-        if (TextUtils.isEmpty(mUsername.getText()) || TextUtils.isEmpty(mPassword.getText())) {
-            ToastUtils.showShort(mContext.getString(R.string.complete_info));
-            return;
-        }
-        startAnim();
-        mUserNameText = mUsername.getText().toString();
-        mPassWordText = mPassword.getText().toString();
-        mPresenter.login(mUserNameText, mPassWordText);
+        //if (TextUtils.isEmpty(mUsername.getText()) || TextUtils.isEmpty(mPassword.getText())) {
+        //    ToastUtils.showShort(mContext.getString(R.string.complete_info));
+        //    return;
+        //}
+        //startAnim();
+        //mUserNameText = mUsername.getText().toString();
+        //mPassWordText = mPassword.getText().toString();
+        //mPresenter.login(mUserNameText, mPassWordText);
+        MainActivity.launchActivity(activity);
     }
 
     @OnClick(R.id.go_register)

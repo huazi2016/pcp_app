@@ -23,9 +23,7 @@ import com.huazi.jdemo.base.utils.Constant;
 import com.huazi.jdemo.base.utils.Utils;
 import com.huazi.jdemo.bean.base.Event;
 import com.huazi.jdemo.ui.fragment.HomeFragment;
-import com.huazi.jdemo.ui.fragment.ParentSquareFragment;
 import com.huazi.jdemo.ui.fragment.ProjectFragment;
-import com.huazi.jdemo.ui.fragment.WeChatFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -177,13 +175,13 @@ public class MainActivity extends AppCompatActivity {
                     fragment = ProjectFragment.getInstance();
                     break;
                 case INDEX_SQUARE:
-                    fragment = ParentSquareFragment.getInstance();
+                    fragment = HomeFragment.getInstance();
                     break;
                 case INDEX_WE_CHAT:
-                    fragment = WeChatFragment.getInstance();
+                    fragment = HomeFragment.getInstance();
                     break;
                 case INDEX_ME:
-                    //fragment = MeFragment.getInstance();
+                    fragment = HomeFragment.getInstance();
                     break;
                 default:
                     break;

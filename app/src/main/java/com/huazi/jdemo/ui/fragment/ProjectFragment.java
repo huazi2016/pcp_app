@@ -12,14 +12,9 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.graphics.ColorUtils;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
-import com.flyco.tablayout.SlidingTabLayout;
 import com.huazi.jdemo.R;
 import com.huazi.jdemo.base.fragment.BaseFragment;
-import com.huazi.jdemo.base.utils.Utils;
 import com.huazi.jdemo.bean.base.Event;
 import com.huazi.jdemo.bean.db.ProjectClassify;
 import com.huazi.jdemo.contract.project.Contract;
@@ -29,11 +24,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import butterknife.BindView;
 
 import static com.blankj.utilcode.util.ColorUtils.getColor;
 
@@ -46,17 +37,6 @@ import static com.blankj.utilcode.util.ColorUtils.getColor;
  * Time: 17:17
  */
 public class ProjectFragment extends BaseFragment<Contract.IProjectView, ProjectPresenter> implements Contract.IProjectView {
-
-    @BindView(R.id.project_tab)
-    SlidingTabLayout mSlidingTabLayout;
-
-    @BindView(R.id.project_divider)
-    View mDivider;
-
-    @BindView(R.id.project_viewpager)
-    ViewPager mViewPager;
-
-    private ArrayList<Fragment> mFragmentSparseArray = new ArrayList<>();
 
     private Context mContext;
 
@@ -87,15 +67,7 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
     protected void init() {
         mContext = getActivity().getApplicationContext();
         initStatusBar();
-        initTabColor();
         mPresenter.loadProjectClassify();
-        setChildViewVisibility(View.VISIBLE);
-        mViewPager.setOffscreenPageLimit(2);
-    }
-
-    private void initTabColor() {
-        mSlidingTabLayout.setDividerColor(Utils.getColor(mContext));
-        mSlidingTabLayout.setIndicatorColor(Utils.getColor(mContext));
     }
 
     private void initStatusBar() {
@@ -123,63 +95,12 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
 
     @Override
     public void onLoadProjectClassify(List<ProjectClassify> projectClassifies) {
-        List<String> tabNames = projectClassifies
-                .stream()
-                .map(projectClassify -> projectClassify.name)
-                .collect(Collectors.toList());
-        projectClassifies.stream().forEach(projectClassify -> {
-            ProjectListFragment projectListFragment = new ProjectListFragment(projectClassify.categoryId);
-            mFragmentSparseArray.add(projectListFragment);
-        });
 
-        mViewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
-            @NonNull
-            @Override
-            public Fragment getItem(int position) {
-                return mFragmentSparseArray.get(position);
-            }
-
-            @Override
-            public int getCount() {
-                return tabNames == null ? 0 : tabNames.size();
-            }
-
-            @Nullable
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return tabNames.get(position);
-            }
-        });
-
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-        mSlidingTabLayout.setViewPager(mViewPager);
     }
 
     @Override
     public void onRefreshProjectClassify(List<ProjectClassify> projectClassifies) {
         onLoadProjectClassify(projectClassifies);
-    }
-
-
-    private void setChildViewVisibility(int visibility) {
-        mSlidingTabLayout.setVisibility(visibility);
-        mDivider.setVisibility(visibility);
-        mViewPager.setVisibility(visibility);
     }
 
     @Override
@@ -197,9 +118,7 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(Event event) {
         if (event.target == Event.TARGET_PROJECT) {
-            if (event.type == Event.TYPE_REFRESH_COLOR) {
-                initTabColor();
-            }
+
         }
     }
 }

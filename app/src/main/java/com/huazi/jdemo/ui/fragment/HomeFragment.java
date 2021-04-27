@@ -3,7 +3,6 @@ package com.huazi.jdemo.ui.fragment;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,30 +22,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.ColorUtils;
 import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.header.TwoLevelHeader;
-import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
-import com.huazi.jdemo.custom.interpolator.ElasticScaleInterpolator;
 import com.huazi.jdemo.R;
-import com.huazi.jdemo.adapter.ArticleAdapter;
 import com.huazi.jdemo.base.fragment.BaseFragment;
 import com.huazi.jdemo.base.utils.Constant;
 import com.huazi.jdemo.base.utils.GlideImageLoader;
 import com.huazi.jdemo.base.utils.JumpWebUtils;
 import com.huazi.jdemo.base.utils.Utils;
 import com.huazi.jdemo.bean.base.Event;
-import com.huazi.jdemo.bean.db.Article;
 import com.huazi.jdemo.bean.collect.Collect;
+import com.huazi.jdemo.bean.db.Article;
 import com.huazi.jdemo.contract.home.Contract;
+import com.huazi.jdemo.custom.interpolator.ElasticScaleInterpolator;
 import com.huazi.jdemo.presenter.home.HomePresenter;
-
-import com.huazi.jdemo.ui.activity.SearchWordActivity;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.header.TwoLevelHeader;
+import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -80,7 +75,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     private Context mContext;
 
-    private ArticleAdapter mArticleAdapter;
+    //private ArticleAdapter mArticleAdapter;
 
     private int mCurrentPage = 0;
 
@@ -88,29 +83,11 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     private List<Article> mArticleList = new ArrayList<>();
 
-    @BindView(R.id.article_recycler)
-    RecyclerView mRecyclerView;
-
-    @BindView(R.id.refresh_layout)
-    SmartRefreshLayout mSmartRefreshLayout;
-
-    @BindView(R.id.nest_scroll)
-    NestedScrollView mNestedScrollView;
-
-    @BindView(R.id.home_toolbar)
-    Toolbar mToolbar;
-
-    @BindView(R.id.second_header)
-    TwoLevelHeader mTwoLevelHeader;
-
-    @BindView(R.id.second_floor_content)
-    FrameLayout mSecondFloor;
-
     @BindView(R.id.layout_error)
     ViewGroup mLayoutError;
 
-    @BindView(R.id.normal_view)
-    ViewGroup mNormalView;
+   // @BindView(R.id.normal_view)
+   // ViewGroup mNormalView;
 
     public static HomeFragment getInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -132,7 +109,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+        //setHasOptionsMenu(true);
     }
 
     @Override
@@ -141,71 +118,27 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
         EventBus.getDefault().unregister(this);
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.toolbar_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
+//
+//    @Override
+//    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+//        inflater.inflate(R.menu.toolbar_menu, menu);
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.top_search) {
-            Intent intent = new Intent(mContext, SearchWordActivity.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        //if (item.getItemId() == R.id.top_search) {
+//        //    Intent intent = new Intent(mContext, SearchWordActivity.class);
+//        //    startActivity(intent);
+//        //}
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     protected void init() {
         mContext = getContext().getApplicationContext();
         mPresenter.loadArticle(mCurrentPage);
-        initAdapter();
-        initBanner();
-        initToolbar();
         initStatusBar();
-        initSmartRefreshHeader();
-        mPresenter.loadBanner();
-        mSmartRefreshLayout.setOnLoadMoreListener(this);
-        mSmartRefreshLayout.setOnRefreshListener(this);
-        // 滑动流畅
-        mRecyclerView.setNestedScrollingEnabled(false);
-        mRecyclerView.setHasFixedSize(true);
-    }
-
-    private void initSmartRefreshHeader() {
-        mSmartRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
-            @Override
-            public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
-                if (oldState == RefreshState.TwoLevel) {
-                    mSecondFloor.animate().alpha(0).setDuration(100);
-                }
-            }
-        });
-        mTwoLevelHeader.setOnTwoLevelListener(refreshLayout -> {
-            mSecondFloor.animate().alpha(1).setDuration(1000);
-            return true;
-        });
-    }
-
-    private void initToolbar() {
-        int showOrHideToolbarHeight = Utils.dpToPx(mContext, 200)
-                - Utils.getStatusBarHeight(mContext)
-                - Utils.getActionBarHeight(mContext);
-        mNestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-            if (scrollY > oldScrollY && scrollY - showOrHideToolbarHeight >= 0) {
-                // 向上滑
-                ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-                mToolbar.setBackgroundColor(Utils.getColor(mContext));
-                mToolbar.setPadding(0, Utils.getStatusBarHeight(mContext), 0, 0);
-                mToolbar.setTitle(R.string.bottomname1);
-                mToolbar.setVisibility(View.VISIBLE);
-            } else if (scrollY < oldScrollY && scrollY - showOrHideToolbarHeight <= 0) {
-                // 向下滑
-                ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-                mToolbar.setVisibility(GONE);
-            }
-        });
     }
 
     private void initStatusBar() {
@@ -222,21 +155,6 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
         }
     }
 
-    private void initBanner() {
-        mBanner.setImageLoader(new GlideImageLoader());
-        mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
-        mBanner.setBannerAnimation(Transformer.Tablet);
-    }
-
-    private void initAdapter() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        mArticleAdapter = new ArticleAdapter(mContext, mArticleList);
-        View header = LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.home_header_view, null, false);
-        mBanner = header.findViewById(R.id.banner);
-        mArticleAdapter.setHeaderView(header);
-        mRecyclerView.setAdapter(mArticleAdapter);
-    }
-
     @Override
     public void onHiddenChanged(boolean hidden) {
         initStatusBar();
@@ -249,27 +167,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     @Override
     public void loadBanner(List<com.huazi.jdemo.bean.db.Banner> bannerList) {
-        if (bannerList != null) {
-            List<String> imageUrls = bannerList
-                    .stream()
-                    .map(banner -> banner.imagePath)
-                    .collect(Collectors.toList());
-            mBanner.setImages(imageUrls);
-            List<String> titles = bannerList
-                    .stream()
-                    .map(banner -> banner.title)
-                    .collect(Collectors.toList());
-            mBanner.setBannerTitles(titles);
-            mBanner.start();
-            mBanner.setOnBannerListener(new OnBannerListener() {
-                @Override
-                public void OnBannerClick(int position) {
-                    JumpWebUtils.startWebView(mContext,
-                            bannerList.get(position).title,
-                            bannerList.get(position).url);
-                }
-            });
-        }
+
     }
 
     @Override
@@ -281,36 +179,24 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     @Override
     public void loadArticle(List<Article> articleList) {
         mArticleList.addAll(articleList);
-        mArticleAdapter.setArticleList(mArticleList);
+        //mArticleAdapter.setArticleList(mArticleList);
     }
 
     @Override
     public void refreshArticle(List<Article> articleList) {
         mArticleList.clear();
         mArticleList.addAll(0, articleList);
-        mArticleAdapter.setArticleList(mArticleList);
+        //mArticleAdapter.setArticleList(mArticleList);
     }
 
     @Override
     public void onCollect(Collect collect, int articleId) {
-        if (collect != null) {
-            if (collect.getErrorCode() == Constant.SUCCESS) {
-                Utils.showSnackMessage(getActivity(), "收藏成功");
-            } else {
-                ToastUtils.showShort("收藏失败");
-            }
-        }
+
     }
 
     @Override
     public void onUnCollect(Collect collect, int articleId) {
-        if (collect != null) {
-            if (collect.getErrorCode() == Constant.SUCCESS) {
-                Utils.showSnackMessage(getActivity(), "取消收藏");
-            } else {
-                ToastUtils.showShort("取消收藏失败");
-            }
-        }
+
     }
 
     @Override
@@ -322,19 +208,18 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     public void onLoadFailed() {
         mLoadService.showSuccess();
         stopLoadingView();
-        setNetWorkError(false);
+        //setNetWorkError(false);
         ToastUtils.showShort("网络未连接请重试");
-        mSmartRefreshLayout.finishRefresh();
-        mSmartRefreshLayout.finishLoadMore();
+        //mSmartRefreshLayout.finishRefresh();
+        //mSmartRefreshLayout.finishLoadMore();
     }
 
     @Override
     public void onLoadSuccess() {
         stopLoadingView();
-        setNetWorkError(true);
-        mSmartRefreshLayout.finishRefresh();
-        mSmartRefreshLayout.finishLoadMore();
-//        startRecyclerViewAnim();
+        //setNetWorkError(true);
+        //mSmartRefreshLayout.finishRefresh();
+        //mSmartRefreshLayout.finishLoadMore();
     }
 
     public void startLoadingView() {
@@ -353,73 +238,25 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     @OnClick(R.id.layout_error)
     public void onReTry() {
-        setNetWorkError(true);
-        mPresenter.loadBanner();
+        //setNetWorkError(true);
+        //mPresenter.loadBanner();
         mPresenter.loadArticle(0);
     }
 
-    private void setNetWorkError(boolean isSuccess) {
-        if (isSuccess) {
-            mNormalView.setVisibility(View.VISIBLE);
-            mLayoutError.setVisibility(View.GONE);
-        } else {
-            mNormalView.setVisibility(View.GONE);
-            mLayoutError.setVisibility(View.VISIBLE);
-        }
-    }
-
-    /**
-     * 开启recyclerview item加载动画
-     */
-    private void startRecyclerViewAnim() {
-        mRecyclerView.getViewTreeObserver().addOnPreDrawListener(
-                new ViewTreeObserver.OnPreDrawListener() {
-                    @Override
-                    public boolean onPreDraw() {
-                        mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
-                        for (int i = 1; i < mRecyclerView.getChildCount(); i++) {
-                            ObjectAnimator animatorX = ObjectAnimator.ofFloat(mRecyclerView.getChildAt(i), "scaleX", 0.8f, 1.0f);
-                            ObjectAnimator animatorY = ObjectAnimator.ofFloat(mRecyclerView.getChildAt(i), "scaleY", 0.8f, 1.0f);
-                            AnimatorSet set = new AnimatorSet();
-                            set.setDuration(1000);
-                            set.setInterpolator(new ElasticScaleInterpolator(0.4f));
-                            set.playTogether(animatorX, animatorY);
-                            set.start();
-                        }
-
-                        return true;
-                    }
-                });
-    }
+    //private void setNetWorkError(boolean isSuccess) {
+    //    if (isSuccess) {
+    //        mNormalView.setVisibility(View.VISIBLE);
+    //        mLayoutError.setVisibility(View.GONE);
+    //    } else {
+    //        mNormalView.setVisibility(View.GONE);
+    //        mLayoutError.setVisibility(View.VISIBLE);
+    //    }
+    //}
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(Event event) {
         if (event.target == Event.TARGET_HOME) {
-            if (event.type == Event.TYPE_COLLECT) {
-                int articleId = Integer.valueOf(event.data);
-                mArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = true;
-                mArticleAdapter.notifyDataSetChanged();
-                mPresenter.collect(articleId);
-            } else if (event.type == Event.TYPE_UNCOLLECT) {
-                int articleId = Integer.valueOf(event.data);
-                mArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = false;
-                mArticleAdapter.notifyDataSetChanged();
-                mPresenter.unCollect(articleId);
-            } else if (event.type == Event.TYPE_LOGIN) {
-                mArticleList.clear();
-                mPresenter.refreshArticle(0);
-            } else if (event.type == Event.TYPE_LOGOUT) {
-                mArticleList.clear();
-                mPresenter.refreshArticle(0);
-            } else if (event.type == Event.TYPE_COLLECT_STATE_REFRESH) {
-                int articleId = Integer.valueOf(event.data);
-                // 刷新的收藏状态一定是和之前的相反
-                mArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect =
-                        !mArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect;
-                mArticleAdapter.notifyDataSetChanged();
-            } else if (event.type == Event.TYPE_REFRESH_COLOR) {
-                mToolbar.setBackgroundColor(Utils.getColor(mContext));
-            }
+
         }
     }
 
@@ -441,7 +278,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
      */
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        mPresenter.refreshBanner();
+        //mPresenter.refreshBanner();
         mCurrentPage = 0;
         mPresenter.refreshArticle(mCurrentPage);
     }

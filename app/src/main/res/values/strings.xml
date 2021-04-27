@@ -5,10 +5,10 @@
     <string name="done">确定</string>
     <string name="cancel">取消</string>
     <string name="title">温馨提示</string>
-    <string name="bottomname1">首页</string>
-    <string name="bottomname2">项目</string>
-    <string name="bottomname3">广场</string>
-    <string name="bottomname4">公众号</string>
+    <string name="bottomname1">文章</string>
+    <string name="bottomname2">测试</string>
+    <string name="bottomname3">聊天</string>
+    <string name="bottomname4">留言</string>
     <string name="bottomname5">我的</string>
     <string name="article_author">作者：%1$s</string>
     <string name="article_category">分类：%1$s/%2$s</string>

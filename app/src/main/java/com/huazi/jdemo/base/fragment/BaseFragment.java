@@ -1,5 +1,7 @@
 package com.huazi.jdemo.base.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +37,7 @@ public abstract class BaseFragment<V, P extends BasePresenter<V>> extends Fragme
 
     protected LoadService mLoadService;
 
+    protected Activity activity;
 
     /**
      * 初始化
@@ -64,6 +67,17 @@ public abstract class BaseFragment<V, P extends BasePresenter<V>> extends Fragme
         return mRootView;
     }
 
+    @Override
+    public void onAttach(@NonNull Activity activity) {
+        super.onAttach(activity);
+        this.activity = activity;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.activity = (Activity)context;
+    }
 
     @Override
     public void onDestroy() {
