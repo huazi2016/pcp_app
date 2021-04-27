@@ -147,15 +147,18 @@ public class RegisterActivity extends BaseActivity {
                             @Override
                             public void onSelect(int position, String text) {
                                 if (position != 3) {
+                                    startAnim();
                                     loginPresenter.register(userName, pwd, new NetCallBack<LoginBo>() {
                                         @Override
                                         public void onLoadSuccess(LoginBo data) {
+                                            stopAnim();
                                             ToastUtils.showShort("注册成功");
                                             finish();
                                         }
 
                                         @Override
                                         public void onLoadFailed(String errMsg) {
+                                            stopAnim();
                                             ToastUtils.showShort(errMsg);
                                         }
                                     });
