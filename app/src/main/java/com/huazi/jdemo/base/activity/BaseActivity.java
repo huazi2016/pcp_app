@@ -1,6 +1,8 @@
 package com.huazi.jdemo.base.activity;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -46,11 +48,16 @@ public abstract class BaseActivity<V, P extends BasePresenter<V>> extends AppCom
      */
     protected abstract P createPresenter();
 
+    protected Activity activity;
+    protected Context context;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewId());
         unbinder = ButterKnife.bind(this);
+        activity = this;
+        context = this;
         mPresenter = createPresenter();
         if (mPresenter != null) {
             mPresenter.attachView((V) this);

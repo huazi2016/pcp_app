@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.View;
@@ -21,7 +23,6 @@ import com.huazi.jdemo.base.utils.Constant;
 import com.huazi.jdemo.base.utils.Utils;
 import com.huazi.jdemo.bean.base.Event;
 import com.huazi.jdemo.ui.fragment.HomeFragment;
-import com.huazi.jdemo.ui.fragment.MeFragment;
 import com.huazi.jdemo.ui.fragment.ParentSquareFragment;
 import com.huazi.jdemo.ui.fragment.ProjectFragment;
 import com.huazi.jdemo.ui.fragment.WeChatFragment;
@@ -63,6 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.loading_view)
     LoadingView mLoadingView;
+
+    public static void launchActivity(Activity activity) {
+        Intent intent = new Intent(activity, MainActivity.class);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -177,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                     fragment = WeChatFragment.getInstance();
                     break;
                 case INDEX_ME:
-                    fragment = MeFragment.getInstance();
+                    //fragment = MeFragment.getInstance();
                     break;
                 default:
                     break;

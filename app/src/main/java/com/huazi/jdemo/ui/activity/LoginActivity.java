@@ -83,12 +83,12 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
     private void initToolbar() {
         getWindow().setStatusBarColor(Utils.getColor(mContext));
         mToolbar.setBackgroundColor(Utils.getColor(mContext));
-        mToolbar.setTitle(R.string.login);
+        mToolbar.setTitle("欢迎登录");
         mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+            //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(true);
         }
     }
@@ -111,46 +111,7 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
         stopAnim();
         if (loginData != null) {
             if (loginData.getErrorCode() == 0) {
-                Event event = new Event();
-                event.target = Event.TARGET_HOME;
-                event.type = Event.TYPE_LOGIN;
-                EventBus.getDefault().post(event);
-
-                Event treeEvent = new Event();
-                treeEvent.target = Event.TARGET_TREE;
-                treeEvent.type = Event.TYPE_LOGIN;
-                EventBus.getDefault().post(treeEvent);
-
-                Event squareEvent = new Event();
-                squareEvent.target = Event.TARGET_SQUARE;
-                squareEvent.type = Event.TYPE_LOGIN;
-                EventBus.getDefault().post(squareEvent);
-
-                Event projectEvent = new Event();
-                projectEvent.target = Event.TARGET_PROJECT;
-                projectEvent.type = Event.TYPE_LOGIN;
-                EventBus.getDefault().post(projectEvent);
-
-                Event wxEvent = new Event();
-                wxEvent.target = Event.TARGET_WX;
-                wxEvent.type = Event.TYPE_LOGIN;
-                EventBus.getDefault().post(wxEvent);
-
-                Event menuEvent = new Event();
-                menuEvent.target = Event.TARGET_ME;
-                menuEvent.type = Event.TYPE_LOGIN;
-                menuEvent.data = mUsername.getText().toString();
-                EventBus.getDefault().post(menuEvent);
-
-                Event meShareEvent = new Event();
-                meShareEvent.target = Event.TARGET_ME_SHARE;
-                meShareEvent.type = Event.TYPE_LOGIN;
-                EventBus.getDefault().post(meShareEvent);
-
-                Event webEvent = new Event();
-                webEvent.target = Event.TARGET_WEB_VIEW;
-                webEvent.type = Event.TYPE_LOGIN;
-                EventBus.getDefault().post(webEvent);
+                MainActivity.launchActivity(this);
                 finish();
             } else {
                 ToastUtils.showShort(loginData.getErrorMsg());
@@ -175,7 +136,6 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        finish();
     }
 
 

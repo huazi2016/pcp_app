@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -24,6 +25,11 @@ import com.huazi.jdemo.base.utils.Utils;
 import com.huazi.jdemo.bean.me.RegisterData;
 import com.huazi.jdemo.contract.register.Contract;
 import com.huazi.jdemo.presenter.register.RegisterPresenter;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
+import com.lxj.xpopup.interfaces.OnSelectListener;
+
+import java.util.function.ToDoubleBiFunction;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -118,17 +124,35 @@ public class RegisterActivity extends BaseActivity<Contract.IRegisterView, Regis
 
     @OnClick(R.id.register)
     public void register() {
-        if (TextUtils.isEmpty(mUsername.getText()) || TextUtils.isEmpty(mPassword.getText()) ||
-                TextUtils.isEmpty(mRePassword.getText())) {
-            ToastUtils.showShort(mContext.getString(R.string.complete_info));
-            return;
-        }
-        if (!TextUtils.equals(mPassword.getText(), mRePassword.getText())) {
-            ToastUtils.showShort(mContext.getString(R.string.password_not_match));
-            return;
-        }
-        mPresenter.register(mUsername.getText().toString(), mPassword.getText().toString());
-        startAnim();
+        // TODO: 2021/4/27 待调整
+        //if (TextUtils.isEmpty(mUsername.getText()) || TextUtils.isEmpty(mPassword.getText()) ||
+        //        TextUtils.isEmpty(mRePassword.getText())) {
+        //    ToastUtils.showShort(mContext.getString(R.string.complete_info));
+        //    return;
+        //}
+        //if (!TextUtils.equals(mPassword.getText(), mRePassword.getText())) {
+        //    ToastUtils.showShort(mContext.getString(R.string.password_not_match));
+        //    return;
+        //}
+        showSelectPop();
+    }
+
+    private void showSelectPop() {
+       new XPopup.Builder(activity)
+                .isDarkTheme(false)
+                .isDestroyOnDismiss(true)
+                .asCenterList("请选择需要注册的角色", new String[]{"学生", "老师", "管理员", "关闭弹窗"},
+                        new OnSelectListener() {
+                            @Override
+                            public void onSelect(int position, String text) {
+                                if (position != 3) {
+                                    //发起注册
+                                    //startAnim();
+                                    //mPresenter.register(mUsername.getText().toString(), mPassword.getText().toString());
+                                    MainActivity.launchActivity(activity);
+                                }
+                            }
+                        }).show();
     }
 
     @Override

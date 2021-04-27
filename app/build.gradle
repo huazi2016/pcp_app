@@ -89,6 +89,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation 'com.kingja.loadsir:loadsir:1.3.6'
+
+    implementation 'com.lxj:xpopup:2.2.23'
 }
 repositories {
     mavenCentral()

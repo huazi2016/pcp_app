@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@null"
-        android:text="注册"
+        android:text="还没有账号？点击注册"
         android:textColor="@color/textTipColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login" />
