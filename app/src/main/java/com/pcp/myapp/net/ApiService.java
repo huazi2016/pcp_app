@@ -7,8 +7,8 @@ import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -24,23 +24,12 @@ public interface ApiService {
     );
 
     @POST("/api/login")
+    //@Headers("Content-Type:application/json; charset=utf-8")
     Observable<BaseResponse<LoginBo>> login(@Body RequestBody body);
 
-//
-//    @GET("/api/article/category")
-//    Observable<BaseResponse<List<String>>> getCategoryList();
-//
-//    @GET("/api/article/category")
-//    Observable<BaseResponse<List<String>>> getCategoryList();
-//
-//    @GET("/api/article/category")
-//    Observable<BaseResponse<List<String>>> getCategoryList();
-//
-//    @GET("/api/article/category")
-//    Observable<BaseResponse<List<String>>> getCategoryList();
-//
-//    @GET("/api/article/category")
-//    Observable<BaseResponse<List<String>>> getCategoryList();
+    @POST("/api/register")
+    Observable<BaseResponse<LoginBo>> register(@Body RequestBody body);
+
 
     @GET("/api/article/category")
     Observable<BaseResponse<List<String>>> getCategoryList();

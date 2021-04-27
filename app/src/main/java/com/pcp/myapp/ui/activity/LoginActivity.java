@@ -104,12 +104,14 @@ public class LoginActivity extends BaseActivity {
         loginPresenter.login(userNameText, passWordText, new NetCallBack<LoginBo>() {
             @Override
             public void onLoadSuccess(LoginBo data) {
+                stopAnim();
                 MainActivity.launchActivity(activity);
             }
 
             @Override
             public void onLoadFailed(String errMsg) {
-
+                stopAnim();
+                ToastUtils.showShort(errMsg);
             }
         });
     }

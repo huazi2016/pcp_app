@@ -1,5 +1,6 @@
 package com.pcp.myapp.net;
 
+import com.google.gson.Gson;
 import com.pcp.myapp.bean.LoginBo;
 
 import org.json.JSONException;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 public class DataManager {
@@ -21,17 +23,24 @@ public class DataManager {
     }
 
     public Observable<BaseResponse<LoginBo>> login(String username, String password){
-        Map<String, String> jsonMap = new HashMap();
+        HashMap<String, String> jsonMap = new HashMap();
         jsonMap.put("username", username);
         jsonMap.put("password", password);
-        RequestBody body = null;
-        //try {
-        //    String contentType = "Content-Type, application/json";
-        //    body = RequestBody.create(contentType, jsonMap.toString());
-        //} catch (Exception e) {
-        //    e.printStackTrace();
-        //}
+        String json = new Gson().toJson(jsonMap);
+        String contentType = "application/json;charset=UTF-8";
+        RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
         return apiService.login(body);
+    }
+
+    public Observable<BaseResponse<LoginBo>> register(String username, String password){
+        HashMap<String, String> jsonMap = new HashMap();
+        jsonMap.put("username", username);
+        jsonMap.put("password", password);
+        jsonMap.put("role", "学生");
+        String json = new Gson().toJson(jsonMap);
+        String contentType = "application/json;charset=UTF-8";
+        RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
+        return apiService.register(body);
     }
 
     public Observable<BaseResponse<List<String>>> getCategoryList(){

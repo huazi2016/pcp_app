@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -12,13 +13,20 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.pcp.myapp.R;
 import com.pcp.myapp.base.activity.BaseActivity;
 import com.pcp.myapp.base.utils.Utils;
+import com.pcp.myapp.bean.LoginBo;
 import com.pcp.myapp.custom.CustomEditText;
 import com.pcp.myapp.custom.loading.LoadingView;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
+import com.pcp.myapp.net.DataManager;
+import com.pcp.myapp.net.MainPresenter;
+import com.pcp.myapp.net.NetCallBack;
+
+import java.util.logging.Level;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -52,6 +60,7 @@ public class RegisterActivity extends BaseActivity {
     Button mRegisterButton;
 
     private Context mContext;
+    private MainPresenter loginPresenter;
 
 
     @Override
@@ -69,7 +78,7 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void initPresenter() {
-
+        loginPresenter = new MainPresenter(new DataManager());
     }
 
     private void initToolbar() {
@@ -113,20 +122,23 @@ public class RegisterActivity extends BaseActivity {
 
     @OnClick(R.id.register)
     public void register() {
-        // TODO: 2021/4/27 待调整
-        //if (TextUtils.isEmpty(mUsername.getText()) || TextUtils.isEmpty(mPassword.getText()) ||
-        //        TextUtils.isEmpty(mRePassword.getText())) {
-        //    ToastUtils.showShort(mContext.getString(R.string.complete_info));
-        //    return;
-        //}
-        //if (!TextUtils.equals(mPassword.getText(), mRePassword.getText())) {
-        //    ToastUtils.showShort(mContext.getString(R.string.password_not_match));
-        //    return;
-        //}
-        showSelectPop();
+        String userNameText = mUsername.getText().toString();
+        String passWordText = mPassword.getText().toString();
+        String rePassWordText = mRePassword.getText().toString();
+
+        if (TextUtils.isEmpty(userNameText) || TextUtils.isEmpty(passWordText) ||
+                TextUtils.isEmpty(rePassWordText)) {
+            ToastUtils.showShort(mContext.getString(R.string.complete_info));
+            return;
+        }
+        if (!TextUtils.equals(passWordText, rePassWordText)) {
+            ToastUtils.showShort(mContext.getString(R.string.password_not_match));
+            return;
+        }
+        showSelectPop(userNameText, passWordText);
     }
 
-    private void showSelectPop() {
+    private void showSelectPop(String userName, String pwd) {
        new XPopup.Builder(activity)
                 .isDarkTheme(false)
                 .isDestroyOnDismiss(true)
@@ -135,10 +147,18 @@ public class RegisterActivity extends BaseActivity {
                             @Override
                             public void onSelect(int position, String text) {
                                 if (position != 3) {
-                                    //发起注册
-                                    //startAnim();
-                                    //mPresenter.register(mUsername.getText().toString(), mPassword.getText().toString());
-                                    MainActivity.launchActivity(activity);
+                                    loginPresenter.register(userName, pwd, new NetCallBack<LoginBo>() {
+                                        @Override
+                                        public void onLoadSuccess(LoginBo data) {
+                                            ToastUtils.showShort("注册成功");
+                                            finish();
+                                        }
+
+                                        @Override
+                                        public void onLoadFailed(String errMsg) {
+                                            ToastUtils.showShort(errMsg);
+                                        }
+                                    });
                                 }
                             }
                         }).show();
