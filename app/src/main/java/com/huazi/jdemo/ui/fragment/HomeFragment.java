@@ -1,51 +1,28 @@
 package com.huazi.jdemo.ui.fragment;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.ColorUtils;
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.huazi.jdemo.R;
 import com.huazi.jdemo.base.fragment.BaseFragment;
-import com.huazi.jdemo.base.utils.Constant;
-import com.huazi.jdemo.base.utils.GlideImageLoader;
-import com.huazi.jdemo.base.utils.JumpWebUtils;
-import com.huazi.jdemo.base.utils.Utils;
 import com.huazi.jdemo.bean.base.Event;
 import com.huazi.jdemo.bean.collect.Collect;
 import com.huazi.jdemo.bean.db.Article;
 import com.huazi.jdemo.contract.home.Contract;
-import com.huazi.jdemo.custom.interpolator.ElasticScaleInterpolator;
 import com.huazi.jdemo.presenter.home.HomePresenter;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.header.TwoLevelHeader;
-import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.Transformer;
-import com.youth.banner.listener.OnBannerListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -53,12 +30,9 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static android.view.View.GONE;
 
 
 /**

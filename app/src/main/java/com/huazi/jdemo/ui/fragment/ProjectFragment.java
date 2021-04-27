@@ -1,6 +1,5 @@
 package com.huazi.jdemo.ui.fragment;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +10,7 @@ import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.graphics.ColorUtils;
 
 import com.huazi.jdemo.R;
@@ -26,6 +26,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
+import butterknife.BindView;
+
 import static com.blankj.utilcode.util.ColorUtils.getColor;
 
 /**
@@ -38,7 +40,8 @@ import static com.blankj.utilcode.util.ColorUtils.getColor;
  */
 public class ProjectFragment extends BaseFragment<Contract.IProjectView, ProjectPresenter> implements Contract.IProjectView {
 
-    private Context mContext;
+    @BindView(R.id.tvText)
+    AppCompatTextView tvText;
 
     public static ProjectFragment getInstance() {
         ProjectFragment fragment = new ProjectFragment();
@@ -65,9 +68,10 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
 
     @Override
     protected void init() {
-        mContext = getActivity().getApplicationContext();
         initStatusBar();
         mPresenter.loadProjectClassify();
+
+        tvText.setText("黄油刀");
     }
 
     private void initStatusBar() {

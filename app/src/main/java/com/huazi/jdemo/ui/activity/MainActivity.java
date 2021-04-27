@@ -98,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
         }
         mBottomNavigationView.setItemIconTintList(Utils.getColorStateList(mContext));
         mBottomNavigationView.setItemTextColor(Utils.getColorStateList(mContext));
+
+
     }
 
     @Override
