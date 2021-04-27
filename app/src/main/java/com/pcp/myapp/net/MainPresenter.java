@@ -1,14 +1,21 @@
 package com.pcp.myapp.net;
 
+import com.google.gson.JsonObject;
+import com.pcp.myapp.bean.LoginBo;
+import com.pcp.myapp.net.contract.MainContract;
+
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.RequestBody;
 
 public class MainPresenter extends BasePresenter<MainContract.View> implements MainContract.Presenter {
 
@@ -17,6 +24,37 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 
     public MainPresenter(DataManager dataManager) {
         this.dataManager = dataManager;
+    }
+
+    public void login(String username, String password, NetCallBack<LoginBo> callBack) {
+        Observable<BaseResponse<LoginBo>> observable = dataManager.login(username, password);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseResponse<LoginBo>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onNext(@NotNull BaseResponse<LoginBo> response) {
+                        if (response.getErrorCode() != 0) {
+                            getView().showError(response.getErrorMsg());
+                            return;
+                        }
+                        //callBack.onLoadSuccess(response.getData());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        //getView().showError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @Override

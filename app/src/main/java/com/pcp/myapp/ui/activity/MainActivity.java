@@ -124,9 +124,6 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.menu_wechat:
                             switchFragment(INDEX_WE_CHAT);
                             return true;
-                        case R.id.menu_me:
-                            switchFragment(INDEX_ME);
-                            return true;
                         default:
                             return false;
                     }
@@ -180,9 +177,6 @@ public class MainActivity extends AppCompatActivity {
                     fragment = HomeFragment.getInstance();
                     break;
                 case INDEX_WE_CHAT:
-                    fragment = HomeFragment.getInstance();
-                    break;
-                case INDEX_ME:
                     fragment = HomeFragment.getInstance();
                     break;
                 default:

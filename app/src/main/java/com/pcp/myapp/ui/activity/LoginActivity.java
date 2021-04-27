@@ -1,10 +1,10 @@
 package com.pcp.myapp.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -13,20 +13,24 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.pcp.myapp.R;
 import com.pcp.myapp.base.activity.BaseActivity;
 import com.pcp.myapp.base.utils.Utils;
+import com.pcp.myapp.bean.LoginBo;
 import com.pcp.myapp.custom.CustomEditText;
 import com.pcp.myapp.custom.loading.LoadingView;
+import com.pcp.myapp.net.DataManager;
+import com.pcp.myapp.net.NetCallBack;
+import com.pcp.myapp.net.contract.MainContract;
+import com.pcp.myapp.net.MainPresenter;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class LoginActivity extends BaseActivity {
-
-
-    private String mUserNameText;
-    private String mPassWordText;
 
     @BindView(R.id.username)
     EditText mUsername;
@@ -46,11 +50,7 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.login_toolbar)
     Toolbar mToolbar;
 
-    private Context mContext;
-
-    private String mRegisterName;
-
-    private String mRegisterPassword;
+    private MainPresenter loginPresenter;
 
     @Override
     protected int getContentViewId() {
@@ -59,28 +59,20 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        mContext = getApplicationContext();
-        try {
-            mRegisterName = getIntent().getExtras().getString("name");
-            mRegisterPassword = getIntent().getExtras().getString("pwd");
-            mUsername.setText(mRegisterName);
-            mPassword.setText(mRegisterPassword);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         initToolbar();
         mLoginButton.getBackground().setColorFilter(
-                Utils.getColor(mContext), PorterDuff.Mode.SRC_ATOP);
+                Utils.getColor(activity), PorterDuff.Mode.SRC_ATOP);
     }
 
     @Override
     protected void initPresenter() {
-
+        loginPresenter = new MainPresenter(new DataManager());
+        //loginPresenter.attachView(this);
     }
 
     private void initToolbar() {
-        getWindow().setStatusBarColor(Utils.getColor(mContext));
-        mToolbar.setBackgroundColor(Utils.getColor(mContext));
+        getWindow().setStatusBarColor(Utils.getColor(activity));
+        mToolbar.setBackgroundColor(Utils.getColor(activity));
         mToolbar.setTitle("欢迎登录");
         mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);
@@ -99,18 +91,44 @@ public class LoginActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     @OnClick(R.id.login)
     public void login() {
-        //if (TextUtils.isEmpty(mUsername.getText()) || TextUtils.isEmpty(mPassword.getText())) {
-        //    ToastUtils.showShort(mContext.getString(R.string.complete_info));
-        //    return;
-        //}
-        //startAnim();
-        //mUserNameText = mUsername.getText().toString();
-        //mPassWordText = mPassword.getText().toString();
-        //mPresenter.login(mUserNameText, mPassWordText);
-        MainActivity.launchActivity(activity);
+        String userNameText = mUsername.getText().toString();
+        String passWordText = mPassword.getText().toString();
+        if (TextUtils.isEmpty(userNameText) || TextUtils.isEmpty(passWordText)) {
+            ToastUtils.showShort(getString(R.string.complete_info));
+            return;
+        }
+        startAnim();
+        loginPresenter.login(userNameText, passWordText, new NetCallBack<LoginBo>() {
+            @Override
+            public void onLoadSuccess(LoginBo data) {
+                MainActivity.launchActivity(activity);
+            }
+
+            @Override
+            public void onLoadFailed(String errMsg) {
+
+            }
+        });
     }
+
+//    @Override
+//    public void showCategoryList(List<String> dataList) {
+//        stopAnim();
+//        MainActivity.launchActivity(activity);
+//    }
+//
+//    @Override
+//    public void showError(String message) {
+//        stopAnim();
+//        if (!TextUtils.isEmpty(message)) {
+//            ToastUtils.showShort(message);
+//        } else {
+//            ToastUtils.showShort("请求异常");
+//        }
+//    }
 
     @OnClick(R.id.go_register)
     public void register() {

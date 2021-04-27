@@ -18,7 +18,7 @@ import com.pcp.myapp.R;
 import com.pcp.myapp.base.fragment.BaseFragment;
 import com.pcp.myapp.bean.EventBo;
 import com.pcp.myapp.net.DataManager;
-import com.pcp.myapp.net.MainContract;
+import com.pcp.myapp.net.contract.MainContract;
 import com.pcp.myapp.net.MainPresenter;
 
 import org.greenrobot.eventbus.EventBus;
