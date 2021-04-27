@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
+import com.huazi.jdemo.base.utils.Constant;
 import com.kingja.loadsir.core.LoadSir;
 import com.huazi.jdemo.base.callback.ErrorCallback;
-import com.huazi.jdemo.base.utils.Constant;
 import com.tencent.mmkv.MMKV;
 
 import org.litepal.LitePal;
@@ -21,9 +21,13 @@ import org.litepal.LitePalApplication;
  * Time: 21:26
  */
 public class MyApp extends LitePalApplication {
+
+    private static MyApp mContext;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        mContext = this;
         LitePal.initialize(this);
         Utils.init(this);
         initMode();
@@ -39,5 +43,9 @@ public class MyApp extends LitePalApplication {
                 (Constant.KEY_NIGHT_MODE, false);
         AppCompatDelegate.setDefaultNightMode(isNightMode ? AppCompatDelegate.MODE_NIGHT_YES :
                 AppCompatDelegate.MODE_NIGHT_NO);
+    }
+
+    public static synchronized MyApp getContext(){
+        return mContext;
     }
 }

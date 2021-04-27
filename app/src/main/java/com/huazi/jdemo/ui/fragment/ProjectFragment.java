@@ -15,16 +15,11 @@ import androidx.core.graphics.ColorUtils;
 
 import com.huazi.jdemo.R;
 import com.huazi.jdemo.base.fragment.BaseFragment;
-import com.huazi.jdemo.bean.base.Event;
-import com.huazi.jdemo.bean.db.ProjectClassify;
-import com.huazi.jdemo.contract.project.Contract;
-import com.huazi.jdemo.presenter.project.ProjectPresenter;
+import com.huazi.jdemo.bean.EventBo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -38,7 +33,7 @@ import static com.blankj.utilcode.util.ColorUtils.getColor;
  * @date: 2019/12/19
  * Time: 17:17
  */
-public class ProjectFragment extends BaseFragment<Contract.IProjectView, ProjectPresenter> implements Contract.IProjectView {
+public class ProjectFragment extends BaseFragment {
 
     @BindView(R.id.tvText)
     AppCompatTextView tvText;
@@ -61,6 +56,11 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
     }
 
     @Override
+    protected void initPresenter() {
+
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         EventBus.getDefault().unregister(this);
@@ -69,7 +69,7 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
     @Override
     protected void init() {
         initStatusBar();
-        mPresenter.loadProjectClassify();
+        //mPresenter.loadProjectClassify();
 
         tvText.setText("黄油刀");
     }
@@ -92,36 +92,9 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
         initStatusBar();
     }
 
-    @Override
-    protected ProjectPresenter createPresenter() {
-        return new ProjectPresenter();
-    }
-
-    @Override
-    public void onLoadProjectClassify(List<ProjectClassify> projectClassifies) {
-
-    }
-
-    @Override
-    public void onRefreshProjectClassify(List<ProjectClassify> projectClassifies) {
-        onLoadProjectClassify(projectClassifies);
-    }
-
-    @Override
-    public void onLoading() {
-    }
-
-    @Override
-    public void onLoadFailed() {
-    }
-
-    @Override
-    public void onLoadSuccess() {
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(Event event) {
-        if (event.target == Event.TARGET_PROJECT) {
+    public void onEvent(EventBo event) {
+        if (event.target == EventBo.TARGET_PROJECT) {
 
         }
     }

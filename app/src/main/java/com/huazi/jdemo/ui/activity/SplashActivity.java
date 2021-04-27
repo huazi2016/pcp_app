@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.airbnb.lottie.LottieAnimationView;
 import com.huazi.jdemo.R;
 import com.huazi.jdemo.base.utils.Utils;
-import com.huazi.jdemo.bean.base.Event;
+import com.huazi.jdemo.bean.EventBo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -86,9 +86,9 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(Event event) {
-        if (event.target == Event.TARGET_SPLASH) {
-            if (event.type == Event.TYPE_REFRESH_COLOR) {
+    public void onEvent(EventBo event) {
+        if (event.target == EventBo.TARGET_SPLASH) {
+            if (event.type == EventBo.TYPE_REFRESH_COLOR) {
                 mSplashContainer.setBackgroundColor(Utils.getColor(mContext));
             }
         }

@@ -1,35 +1,24 @@
 package com.huazi.jdemo.ui.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
-import com.blankj.utilcode.util.ToastUtils;
-import com.huazi.jdemo.custom.CustomEditText;
-import com.huazi.jdemo.custom.loading.LoadingView;
 import com.huazi.jdemo.R;
 import com.huazi.jdemo.base.activity.BaseActivity;
-import com.huazi.jdemo.base.utils.Constant;
 import com.huazi.jdemo.base.utils.Utils;
-import com.huazi.jdemo.bean.me.RegisterData;
-import com.huazi.jdemo.contract.register.Contract;
-import com.huazi.jdemo.presenter.register.RegisterPresenter;
+import com.huazi.jdemo.custom.CustomEditText;
+import com.huazi.jdemo.custom.loading.LoadingView;
 import com.lxj.xpopup.XPopup;
-import com.lxj.xpopup.core.BasePopupView;
 import com.lxj.xpopup.interfaces.OnSelectListener;
-
-import java.util.function.ToDoubleBiFunction;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -42,7 +31,7 @@ import butterknife.OnClick;
  * @date: 2020/01/26
  * Time: 15:26
  */
-public class RegisterActivity extends BaseActivity<Contract.IRegisterView, RegisterPresenter> implements Contract.IRegisterView {
+public class RegisterActivity extends BaseActivity {
 
     @BindView(R.id.register_toolbar)
     Toolbar mToolbar;
@@ -78,6 +67,11 @@ public class RegisterActivity extends BaseActivity<Contract.IRegisterView, Regis
                 Utils.getColor(mContext), PorterDuff.Mode.SRC_ATOP);
     }
 
+    @Override
+    protected void initPresenter() {
+
+    }
+
     private void initToolbar() {
         getWindow().setStatusBarColor(Utils.getColor(mContext));
         mToolbar.setBackgroundColor(Utils.getColor(mContext));
@@ -100,27 +94,22 @@ public class RegisterActivity extends BaseActivity<Contract.IRegisterView, Regis
     }
 
 
-    @Override
-    protected RegisterPresenter createPresenter() {
-        return new RegisterPresenter();
-    }
-
-    @Override
-    public void onRegister(RegisterData registerData) {
-        stopAnim();
-        if (registerData != null) {
-            if (registerData.getErrorCode() == Constant.SUCCESS) {
-                ToastUtils.showShort(mContext.getString(R.string.register_success));
-                Intent intent = new Intent(mContext, LoginActivity.class);
-                intent.putExtra(Constant.EXTRA_KEY_USERNAME, mUsername.getText().toString());
-                intent.putExtra(Constant.EXTRA_VALUE_PASSWORD, mPassword.getText().toString());
-                startActivity(intent);
-                finish();
-            } else {
-                ToastUtils.showShort(registerData.getErrorMsg());
-            }
-        }
-    }
+    //@Override
+    //public void onRegister(RegisterData registerData) {
+    //    stopAnim();
+    //    if (registerData != null) {
+    //        if (registerData.getErrorCode() == Constant.SUCCESS) {
+    //            ToastUtils.showShort(mContext.getString(R.string.register_success));
+    //            Intent intent = new Intent(mContext, LoginActivity.class);
+    //            intent.putExtra(Constant.EXTRA_KEY_USERNAME, mUsername.getText().toString());
+    //            intent.putExtra(Constant.EXTRA_VALUE_PASSWORD, mPassword.getText().toString());
+    //            startActivity(intent);
+    //            finish();
+    //        } else {
+    //            ToastUtils.showShort(registerData.getErrorMsg());
+    //        }
+    //    }
+    //}
 
     @OnClick(R.id.register)
     public void register() {
@@ -153,21 +142,6 @@ public class RegisterActivity extends BaseActivity<Contract.IRegisterView, Regis
                                 }
                             }
                         }).show();
-    }
-
-    @Override
-    public void onLoading() {
-
-    }
-
-    @Override
-    public void onLoadFailed() {
-        stopAnim();
-    }
-
-    @Override
-    public void onLoadSuccess() {
-
     }
 
     private void startAnim() {

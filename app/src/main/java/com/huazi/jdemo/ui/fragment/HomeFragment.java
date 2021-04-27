@@ -1,6 +1,5 @@
 package com.huazi.jdemo.ui.fragment;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,21 +7,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.graphics.ColorUtils;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.huazi.jdemo.R;
 import com.huazi.jdemo.base.fragment.BaseFragment;
-import com.huazi.jdemo.bean.base.Event;
-import com.huazi.jdemo.bean.collect.Collect;
-import com.huazi.jdemo.bean.db.Article;
-import com.huazi.jdemo.contract.home.Contract;
-import com.huazi.jdemo.presenter.home.HomePresenter;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.youth.banner.Banner;
+import com.huazi.jdemo.bean.EventBo;
+import com.huazi.jdemo.net.ApiService;
+import com.huazi.jdemo.net.DataManager;
+import com.huazi.jdemo.net.MainContract;
+import com.huazi.jdemo.net.MainPresenter;
+import com.huazi.jdemo.net.RetrofitUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -43,25 +42,15 @@ import butterknife.OnClick;
  * @date: 2019/12/14
  * Time: 16:33
  */
-public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter> implements Contract.IHomeView,
-        com.scwang.smartrefresh.layout.listener.OnLoadMoreListener,
-        com.scwang.smartrefresh.layout.listener.OnRefreshListener {
+public class HomeFragment extends BaseFragment implements MainContract.View {
 
-    private Context mContext;
-
-    //private ArticleAdapter mArticleAdapter;
-
-    private int mCurrentPage = 0;
-
-    private Banner mBanner;
-
-    private List<Article> mArticleList = new ArrayList<>();
+    @BindView(R.id.tvNetLoad)
+    AppCompatTextView tvNetLoad;
 
     @BindView(R.id.layout_error)
     ViewGroup mLayoutError;
 
-   // @BindView(R.id.normal_view)
-   // ViewGroup mNormalView;
+    private MainPresenter loginPresenter;
 
     public static HomeFragment getInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -81,6 +70,22 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     }
 
     @Override
+    protected void initPresenter() {
+        loginPresenter = new MainPresenter(new DataManager());
+        loginPresenter.attachView(this);
+    }
+
+    @Override
+    public void showCategoryList(List<String> dataList) {
+        Toast.makeText(activity, dataList.get(0) + "", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showError(String message) {
+
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setHasOptionsMenu(true);
@@ -92,27 +97,17 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
         EventBus.getDefault().unregister(this);
     }
 
-//
-//    @Override
-//    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-//        inflater.inflate(R.menu.toolbar_menu, menu);
-//        super.onCreateOptionsMenu(menu, inflater);
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        //if (item.getItemId() == R.id.top_search) {
-//        //    Intent intent = new Intent(mContext, SearchWordActivity.class);
-//        //    startActivity(intent);
-//        //}
-//        return super.onOptionsItemSelected(item);
-//    }
-
     @Override
     protected void init() {
-        mContext = getContext().getApplicationContext();
-        mPresenter.loadArticle(mCurrentPage);
         initStatusBar();
+
+        tvNetLoad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //mPresenter.loadArticle(0);
+                loginPresenter.getCategoryList();
+            }
+        });
     }
 
     private void initStatusBar() {
@@ -134,79 +129,17 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
         initStatusBar();
     }
 
-    @Override
-    protected HomePresenter createPresenter() {
-        return new HomePresenter();
-    }
-
-    @Override
-    public void loadBanner(List<com.huazi.jdemo.bean.db.Banner> bannerList) {
-
-    }
-
-    @Override
-    public void refreshBanner(List<com.huazi.jdemo.bean.db.Banner> bannerList) {
-        loadBanner(bannerList);
-    }
-
-
-    @Override
-    public void loadArticle(List<Article> articleList) {
-        mArticleList.addAll(articleList);
-        //mArticleAdapter.setArticleList(mArticleList);
-    }
-
-    @Override
-    public void refreshArticle(List<Article> articleList) {
-        mArticleList.clear();
-        mArticleList.addAll(0, articleList);
-        //mArticleAdapter.setArticleList(mArticleList);
-    }
-
-    @Override
-    public void onCollect(Collect collect, int articleId) {
-
-    }
-
-    @Override
-    public void onUnCollect(Collect collect, int articleId) {
-
-    }
-
-    @Override
-    public void onLoading() {
-        startLoadingView();
-    }
-
-    @Override
-    public void onLoadFailed() {
-        mLoadService.showSuccess();
-        stopLoadingView();
-        //setNetWorkError(false);
-        ToastUtils.showShort("网络未连接请重试");
-        //mSmartRefreshLayout.finishRefresh();
-        //mSmartRefreshLayout.finishLoadMore();
-    }
-
-    @Override
-    public void onLoadSuccess() {
-        stopLoadingView();
-        //setNetWorkError(true);
-        //mSmartRefreshLayout.finishRefresh();
-        //mSmartRefreshLayout.finishLoadMore();
-    }
-
     public void startLoadingView() {
-        Event e = new Event();
-        e.target = Event.TARGET_MAIN;
-        e.type = Event.TYPE_START_ANIMATION;
+        EventBo e = new EventBo();
+        e.target = EventBo.TARGET_MAIN;
+        e.type = EventBo.TYPE_START_ANIMATION;
         EventBus.getDefault().post(e);
     }
 
     public void stopLoadingView() {
-        Event e = new Event();
-        e.target = Event.TARGET_MAIN;
-        e.type = Event.TYPE_STOP_ANIMATION;
+        EventBo e = new EventBo();
+        e.target = EventBo.TARGET_MAIN;
+        e.type = EventBo.TYPE_STOP_ANIMATION;
         EventBus.getDefault().post(e);
     }
 
@@ -214,7 +147,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     public void onReTry() {
         //setNetWorkError(true);
         //mPresenter.loadBanner();
-        mPresenter.loadArticle(0);
+        //mPresenter.loadArticle(0);
     }
 
     //private void setNetWorkError(boolean isSuccess) {
@@ -228,32 +161,9 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     //}
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(Event event) {
-        if (event.target == Event.TARGET_HOME) {
+    public void onEvent(EventBo event) {
+        if (event.target == EventBo.TARGET_HOME) {
 
         }
-    }
-
-    /**
-     * 加载新文章从底部开始
-     *
-     * @param refreshLayout
-     */
-    @Override
-    public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-        mCurrentPage++;
-        mPresenter.loadArticle(mCurrentPage);
-    }
-
-    /**
-     * 刷新文章从首页开始
-     *
-     * @param refreshLayout
-     */
-    @Override
-    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        //mPresenter.refreshBanner();
-        mCurrentPage = 0;
-        mPresenter.refreshArticle(mCurrentPage);
     }
 }

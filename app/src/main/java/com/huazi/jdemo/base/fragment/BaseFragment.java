@@ -12,8 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.kingja.loadsir.core.LoadService;
-import com.huazi.jdemo.base.presenter.BasePresenter;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -25,45 +23,29 @@ import butterknife.Unbinder;
  * @date: 2019/12/18
  * Time: 21:26
  */
-public abstract class BaseFragment<V, P extends BasePresenter<V>> extends Fragment{
-
-    protected P mPresenter;
+public abstract class BaseFragment extends Fragment {
 
     protected Unbinder unbinder;
+    protected View mRootView;
+    protected LoadService mLoadService;
+    protected Activity activity;
+
+    protected abstract void init();
 
     protected abstract int getContentViewId();
 
-    protected View mRootView;
-
-    protected LoadService mLoadService;
-
-    protected Activity activity;
-
-    /**
-     * 初始化
-     */
-    protected abstract void init();
-
-    /**
-     * 创建Presenter
-     *
-     * @return p
-     */
-    protected abstract P createPresenter();
+    protected abstract void initPresenter();
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         if (mRootView == null) {
             mRootView = inflater.inflate(getContentViewId(), container, false);
         }
-        mPresenter = createPresenter();
         unbinder = ButterKnife.bind(this, mRootView);
-        if (mPresenter != null) {
-            mPresenter.attachView((V) this);
-        }
         init();
+        initPresenter();
         return mRootView;
     }
 
@@ -76,7 +58,7 @@ public abstract class BaseFragment<V, P extends BasePresenter<V>> extends Fragme
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        this.activity = (Activity)context;
+        this.activity = (Activity) context;
     }
 
     @Override
@@ -84,9 +66,6 @@ public abstract class BaseFragment<V, P extends BasePresenter<V>> extends Fragme
         super.onDestroy();
         if (unbinder != null) {
             unbinder.unbind();
-        }
-        if (mPresenter != null) {
-            mPresenter.detachView();
         }
     }
 }

@@ -15,13 +15,13 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.huazi.jdemo.base.utils.Constant;
 import com.huazi.jdemo.custom.loading.LoadingView;
 import com.huazi.jdemo.R;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.huazi.jdemo.base.utils.Constant;
 import com.huazi.jdemo.base.utils.Utils;
-import com.huazi.jdemo.bean.base.Event;
+import com.huazi.jdemo.bean.EventBo;
 import com.huazi.jdemo.ui.fragment.HomeFragment;
 import com.huazi.jdemo.ui.fragment.ProjectFragment;
 
@@ -232,17 +232,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(Event event) {
-        if (event.target == Event.TARGET_MAIN) {
-            if (event.type == Event.TYPE_REFRESH_COLOR) {
+    public void onEvent(EventBo event) {
+        if (event.target == EventBo.TARGET_MAIN) {
+            if (event.type == EventBo.TYPE_REFRESH_COLOR) {
                 mBottomNavigationView.setItemIconTintList(Utils.getColorStateList(mContext));
                 mBottomNavigationView.setItemTextColor(Utils.getColorStateList(mContext));
-            } else if (event.type == Event.TYPE_CHANGE_DAY_NIGHT_MODE) {
+            } else if (event.type == EventBo.TYPE_CHANGE_DAY_NIGHT_MODE) {
                 recreate();
-            } else if (event.type == Event.TYPE_START_ANIMATION) {
+            } else if (event.type == EventBo.TYPE_START_ANIMATION) {
                 mLoadingView.setVisibility(View.VISIBLE);
                 mLoadingView.startTranglesAnimation();
-            } else if (event.type == Event.TYPE_STOP_ANIMATION) {
+            } else if (event.type == EventBo.TYPE_STOP_ANIMATION) {
                 mLoadingView.setVisibility(View.GONE);
             }
         }

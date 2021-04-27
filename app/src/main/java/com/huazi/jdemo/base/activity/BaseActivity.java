@@ -7,9 +7,6 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.huazi.jdemo.base.presenter.BasePresenter;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -21,14 +18,14 @@ import butterknife.Unbinder;
  * @date: 2019/12/18
  * Time: 21:26
  */
-public abstract class BaseActivity<V, P extends BasePresenter<V>> extends AppCompatActivity {
-
-    protected P mPresenter;
+public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 使用ButterKnife
      */
     protected Unbinder unbinder;
+    protected Activity activity;
+    protected Context context;
 
     /**
      * 获取布局id
@@ -42,14 +39,7 @@ public abstract class BaseActivity<V, P extends BasePresenter<V>> extends AppCom
      */
     protected abstract void init(Bundle savedInstanceState);
 
-    /**
-     * 创建Presenter
-     * @return 返回当前Presenter
-     */
-    protected abstract P createPresenter();
-
-    protected Activity activity;
-    protected Context context;
+    protected abstract void initPresenter();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,17 +48,13 @@ public abstract class BaseActivity<V, P extends BasePresenter<V>> extends AppCom
         unbinder = ButterKnife.bind(this);
         activity = this;
         context = this;
-        mPresenter = createPresenter();
-        if (mPresenter != null) {
-            mPresenter.attachView((V) this);
-        }
         init(savedInstanceState);
+        initPresenter();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-        mPresenter.detachView();
     }
 }
