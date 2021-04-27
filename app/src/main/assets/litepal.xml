@@ -4,12 +4,12 @@
     <version value="1"></version>
     <storage value="external"></storage>
     <list>
-        <mapping class="com.huazi.jdemo.bean.db.Banner"></mapping>
-        <mapping class="com.huazi.jdemo.bean.db.Article"></mapping>
-        <mapping class="com.huazi.jdemo.bean.db.ProjectClassify"></mapping>
-        <mapping class="com.huazi.jdemo.bean.db.Tree"></mapping>
-        <mapping class="com.huazi.jdemo.bean.db.Collect"></mapping>
-        <mapping class="com.huazi.jdemo.bean.db.Author"></mapping>
-        <mapping class="com.huazi.jdemo.bean.db.Rank"></mapping>
+        <mapping class="com.pcp.myapp.bean.db.Banner"></mapping>
+        <mapping class="com.pcp.myapp.bean.db.Article"></mapping>
+        <mapping class="com.pcp.myapp.bean.db.ProjectClassify"></mapping>
+        <mapping class="com.pcp.myapp.bean.db.Tree"></mapping>
+        <mapping class="com.pcp.myapp.bean.db.Collect"></mapping>
+        <mapping class="com.pcp.myapp.bean.db.Author"></mapping>
+        <mapping class="com.pcp.myapp.bean.db.Rank"></mapping>
     </list>
 </litepal>
