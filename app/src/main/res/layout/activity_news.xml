@@ -18,6 +18,7 @@
         android:padding="15dp">
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="invisible"
             android:id="@+id/tvNewsCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

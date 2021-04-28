@@ -82,6 +82,7 @@ public class NewsActivity extends BaseActivity {
             @Override
             public void onLoadSuccess(SearchBo newsBo) {
                 tvCommonTitle.setText(newsBo.title);
+                tvNewsCategory.setVisibility(View.VISIBLE);
                 tvNewsCategory.setText(newsBo.category);
                 tvNewsName.setText(newsBo.username);
                 tvNewsTime.setText(newsBo.time);

@@ -15,10 +15,10 @@ import com.pcp.myapp.base.activity.BaseActivity;
 import com.pcp.myapp.net.DataManager;
 import com.pcp.myapp.net.MainPresenter;
 import com.pcp.myapp.net.NetCallBack;
-import com.pcp.myapp.utils.LogUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class TestActivity extends BaseActivity {
 
@@ -37,6 +37,7 @@ public class TestActivity extends BaseActivity {
     private final static String TEST_ID = "test_id";
     private final static String TEST_TITLE = "test_title";
     private final static String TEST_ANSWER = "test_answer";
+    private String id = "";
 
     public static void launchActivity(Activity activity, String id, String title, String answer) {
         Intent intent = new Intent(activity, TestActivity.class);
@@ -63,7 +64,7 @@ public class TestActivity extends BaseActivity {
             }
         });
         if (getIntent() != null) {
-            String id = getIntent().getStringExtra(TEST_ID);
+            id = getIntent().getStringExtra(TEST_ID);
             String title = getIntent().getStringExtra(TEST_TITLE);
             String answer = getIntent().getStringExtra(TEST_ANSWER);
             if (!TextUtils.isEmpty(title)) {
@@ -85,21 +86,52 @@ public class TestActivity extends BaseActivity {
     private void loadAnswer(String id) {
         newPresenter.loadAnswer(id, new NetCallBack<String>() {
             @Override
-            public void onLoadSuccess(String resultList) {
-                LogUtils.d("loadCategoryList_ok==" + resultList);
+            public void onLoadSuccess(String result) {
+                if (!TextUtils.isEmpty(result)) {
+                    etTestAnswer.setVisibility(View.GONE);
+                    tvTestCommit.setVisibility(View.GONE);
+                    tvTestAnswer.setVisibility(View.VISIBLE);
+                    tvTestAnswer.setText("答案: " + result);
+                } else {
+                    etTestAnswer.setVisibility(View.VISIBLE);
+                    tvTestCommit.setVisibility(View.VISIBLE);
+                    tvTestAnswer.setVisibility(View.GONE);
+                }
             }
 
             @Override
             public void onLoadFailed(String errMsg) {
-                LogUtils.e("loadCategoryList_err==" + errMsg);
+
             }
         });
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+    @OnClick({R.id.tvTestContent, R.id.tvTestCommit})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tvTestContent:
+                break;
+            case R.id.tvTestCommit:
+                commitAnswer();
+                break;
+        }
+    }
+
+    private void commitAnswer() {
+        String answer = etTestAnswer.getText().toString();
+        newPresenter.commitAnswer(id, answer, new NetCallBack<String>() {
+            @Override
+            public void onLoadSuccess(String result) {
+                etTestAnswer.setVisibility(View.GONE);
+                tvTestCommit.setVisibility(View.GONE);
+                tvTestAnswer.setVisibility(View.VISIBLE);
+                tvTestAnswer.setText("答案: " + result);
+            }
+
+            @Override
+            public void onLoadFailed(String errMsg) {
+
+            }
+        });
     }
 }

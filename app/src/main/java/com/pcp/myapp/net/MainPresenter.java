@@ -339,7 +339,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> {
                 });
     }
 
-    public void loadAnswer(String psyId, String answer, NetCallBack<String> callBack) {
+    public void commitAnswer(String psyId, String answer, NetCallBack<String> callBack) {
         Observable<BaseResponse<String>> observable = dataManager.commitAnswer(psyId, answer);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
