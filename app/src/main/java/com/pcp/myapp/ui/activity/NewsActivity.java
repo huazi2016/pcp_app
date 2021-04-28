@@ -36,6 +36,7 @@ public class NewsActivity extends BaseActivity {
     AppCompatTextView tvNewsTime;
     @BindView(R.id.tvNewsContent)
     AppCompatTextView tvNewsContent;
+
     private MainPresenter newPresenter;
     private final static String NEWS_ID = "news_id";
 
@@ -92,12 +93,5 @@ public class NewsActivity extends BaseActivity {
                 LogUtils.e("loadCategoryList_err==" + errMsg);
             }
         });
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }

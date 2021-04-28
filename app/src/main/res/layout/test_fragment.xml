@@ -12,7 +12,7 @@
         android:background="@color/colorPrimary">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvAllBtn"
+            android:id="@+id/tvTestAllBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -30,7 +30,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etHome"
+            android:id="@+id/etTest"
             style="@style/editText_style"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="15dp"
@@ -39,15 +39,16 @@
             android:paddingTop="3dp"
             android:paddingRight="15dp"
             android:paddingBottom="3dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tvAllBtn"
+            app:layout_constraintStart_toEndOf="@+id/tvTestAllBtn"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcHomeList"
+        android:id="@+id/rcTestList"
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         tools:itemCount="5"

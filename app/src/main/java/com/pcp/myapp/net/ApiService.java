@@ -2,6 +2,7 @@ package com.pcp.myapp.net;
 
 import com.pcp.myapp.bean.LoginBo;
 import com.pcp.myapp.bean.SearchBo;
+import com.pcp.myapp.bean.SearchTestBo;
 
 import java.util.List;
 import io.reactivex.Observable;
@@ -37,6 +38,12 @@ public interface ApiService {
 
     @POST("/api/article/search")
     Observable<BaseResponse<List<SearchBo>>> search(@Body RequestBody body);
+
+    @GET("/api/psy/test/category")
+    Observable<BaseResponse<List<String>>> getTestList();
+
+    @POST("/api/psy/search")
+    Observable<BaseResponse<List<SearchTestBo>>> searchTest(@Body RequestBody body);
 
     @GET("/api/article/detail")
     Observable<BaseResponse<SearchBo>> loadNewsDetail(
