@@ -14,7 +14,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.pcp.myapp.R;
 import com.pcp.myapp.base.fragment.BaseFragment;
-import com.pcp.myapp.bean.ChatListBo;
 import com.pcp.myapp.bean.EventBo;
 import com.pcp.myapp.bean.MessageListBo;
 import com.pcp.myapp.net.DataManager;
@@ -62,6 +61,8 @@ public class MessageFragment extends BaseFragment {
     protected void init() {
         initStatusBar();
         initRecycleView();
+        // TODO: 2021/4/28 模拟名称
+        //loadMessageList(MmkvUtil.getUserName());
         loadMessageList("方玉龙");
     }
 
@@ -70,25 +71,6 @@ public class MessageFragment extends BaseFragment {
         messageAdapter = new MessageListAdapter(R.layout.item_home_list, dataList);
         rcMessageList.setAdapter(messageAdapter);
     }
-
-//    @OnClick({R.id.tvTestAllBtn, R.id.etTest})
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.tvTestAllBtn: {
-//                //分类按钮
-//                showSelectPop();
-//                break;
-//            }
-//            case R.id.etTest: {
-//                //分类按钮
-//                loadCategoryList();
-//                break;
-//            }
-//            default: {
-//                break;
-//            }
-//        }
-//    }
 
     private void loadMessageList(String teacher) {
         chatPresenter.loadMessageList(teacher, new NetCallBack<List<MessageListBo>>() {

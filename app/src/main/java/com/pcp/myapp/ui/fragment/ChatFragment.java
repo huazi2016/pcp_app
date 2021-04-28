@@ -21,6 +21,7 @@ import com.pcp.myapp.net.DataManager;
 import com.pcp.myapp.net.MainPresenter;
 import com.pcp.myapp.net.NetCallBack;
 import com.pcp.myapp.utils.LogUtils;
+import com.pcp.myapp.utils.MmkvUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
@@ -64,7 +65,11 @@ public class ChatFragment extends BaseFragment {
     protected void init() {
         initStatusBar();
         initRecycleView();
-        loadChatList("老师");
+        String role = MmkvUtil.TEACHER;
+        if (MmkvUtil.isTeacher()) {
+            role = MmkvUtil.STUDENT;
+        }
+        loadChatList(role);
     }
 
     private void initRecycleView() {

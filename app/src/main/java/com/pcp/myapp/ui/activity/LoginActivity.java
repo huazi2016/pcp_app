@@ -23,6 +23,8 @@ import com.pcp.myapp.custom.loading.LoadingView;
 import com.pcp.myapp.net.DataManager;
 import com.pcp.myapp.net.NetCallBack;
 import com.pcp.myapp.net.MainPresenter;
+import com.pcp.myapp.utils.MmkvUtil;
+import com.tencent.mmkv.MMKV;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -102,6 +104,8 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onLoadSuccess(LoginBo data) {
                 stopAnim();
+                MmkvUtil.saveRole(data.role);
+                MmkvUtil.saveUserName(data.username);
                 MainActivity.launchActivity(activity);
             }
 
@@ -112,22 +116,6 @@ public class LoginActivity extends BaseActivity {
             }
         });
     }
-
-//    @Override
-//    public void showCategoryList(List<String> dataList) {
-//        stopAnim();
-//        MainActivity.launchActivity(activity);
-//    }
-//
-//    @Override
-//    public void showError(String message) {
-//        stopAnim();
-//        if (!TextUtils.isEmpty(message)) {
-//            ToastUtils.showShort(message);
-//        } else {
-//            ToastUtils.showShort("请求异常");
-//        }
-//    }
 
     @OnClick(R.id.go_register)
     public void register() {
