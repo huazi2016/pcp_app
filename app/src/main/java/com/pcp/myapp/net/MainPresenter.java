@@ -58,8 +58,8 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
                 });
     }
 
-    public void register(String username, String password, NetCallBack<LoginBo> callBack) {
-        Observable<BaseResponse<LoginBo>> observable = dataManager.register(username, password);
+    public void register(String username, String password, String role, NetCallBack<LoginBo> callBack) {
+        Observable<BaseResponse<LoginBo>> observable = dataManager.register(username, password, role);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseResponse<LoginBo>>() {

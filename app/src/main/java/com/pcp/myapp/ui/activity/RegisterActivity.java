@@ -102,24 +102,6 @@ public class RegisterActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    //@Override
-    //public void onRegister(RegisterData registerData) {
-    //    stopAnim();
-    //    if (registerData != null) {
-    //        if (registerData.getErrorCode() == Constant.SUCCESS) {
-    //            ToastUtils.showShort(mContext.getString(R.string.register_success));
-    //            Intent intent = new Intent(mContext, LoginActivity.class);
-    //            intent.putExtra(Constant.EXTRA_KEY_USERNAME, mUsername.getText().toString());
-    //            intent.putExtra(Constant.EXTRA_VALUE_PASSWORD, mPassword.getText().toString());
-    //            startActivity(intent);
-    //            finish();
-    //        } else {
-    //            ToastUtils.showShort(registerData.getErrorMsg());
-    //        }
-    //    }
-    //}
-
     @OnClick(R.id.register)
     public void register() {
         String userNameText = mUsername.getText().toString();
@@ -142,13 +124,13 @@ public class RegisterActivity extends BaseActivity {
        new XPopup.Builder(activity)
                 .isDarkTheme(false)
                 .isDestroyOnDismiss(true)
-                .asCenterList("请选择需要注册的角色", new String[]{"学生", "老师", "管理员", "关闭弹窗"},
+                .asCenterList("请选择需要注册的角色", new String[]{"学生", "老师", "关闭弹窗"},
                         new OnSelectListener() {
                             @Override
                             public void onSelect(int position, String text) {
                                 if (position != 3) {
                                     startAnim();
-                                    loginPresenter.register(userName, pwd, new NetCallBack<LoginBo>() {
+                                    loginPresenter.register(userName, pwd, text, new NetCallBack<LoginBo>() {
                                         @Override
                                         public void onLoadSuccess(LoginBo data) {
                                             stopAnim();

@@ -32,11 +32,11 @@ public class DataManager {
         return apiService.login(body);
     }
 
-    public Observable<BaseResponse<LoginBo>> register(String username, String password){
+    public Observable<BaseResponse<LoginBo>> register(String username, String password, String role){
         HashMap<String, String> jsonMap = new HashMap();
         jsonMap.put("username", username);
         jsonMap.put("password", password);
-        jsonMap.put("role", "学生");
+        jsonMap.put("role", role);
         String json = new Gson().toJson(jsonMap);
         String contentType = "application/json;charset=UTF-8";
         RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
