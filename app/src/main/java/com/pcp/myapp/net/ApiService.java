@@ -1,6 +1,8 @@
 package com.pcp.myapp.net;
 
+import com.pcp.myapp.bean.ChatListBo;
 import com.pcp.myapp.bean.LoginBo;
+import com.pcp.myapp.bean.MessageListBo;
 import com.pcp.myapp.bean.SearchBo;
 import com.pcp.myapp.bean.SearchTestBo;
 
@@ -48,5 +50,16 @@ public interface ApiService {
     @GET("/api/article/detail")
     Observable<BaseResponse<SearchBo>> loadNewsDetail(
             @Query("id") String id
+    );
+
+    @GET("/api/user/list")
+    Observable<BaseResponse<List<ChatListBo>>> loadChatList(
+            @Query("role") String role
+    );
+
+    @GET("/api/message/list")
+    Observable<BaseResponse<List<MessageListBo>>> loadMessageList(
+            @Query("teacher") String teacher
+            //@Query("reply") String reply
     );
 }

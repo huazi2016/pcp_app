@@ -1,7 +1,9 @@
 package com.pcp.myapp.net;
 
 import com.google.gson.Gson;
+import com.pcp.myapp.bean.ChatListBo;
 import com.pcp.myapp.bean.LoginBo;
+import com.pcp.myapp.bean.MessageListBo;
 import com.pcp.myapp.bean.SearchBo;
 import com.pcp.myapp.bean.SearchTestBo;
 
@@ -75,5 +77,13 @@ public class DataManager {
 
     public Observable<BaseResponse<SearchBo>> loadNewsDetail(String id){
         return apiService.loadNewsDetail(id);
+    }
+
+    public Observable<BaseResponse<List<ChatListBo>>> loadChatList(String role){
+        return apiService.loadChatList(role);
+    }
+
+    public Observable<BaseResponse<List<MessageListBo>>> loadMessageList(String teacher){
+        return apiService.loadMessageList(teacher);
     }
 }

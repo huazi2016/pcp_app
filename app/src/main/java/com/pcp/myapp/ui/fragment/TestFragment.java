@@ -22,7 +22,6 @@ import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.pcp.myapp.R;
 import com.pcp.myapp.base.fragment.BaseFragment;
 import com.pcp.myapp.bean.EventBo;
-import com.pcp.myapp.bean.SearchBo;
 import com.pcp.myapp.bean.SearchTestBo;
 import com.pcp.myapp.net.DataManager;
 import com.pcp.myapp.net.MainPresenter;
@@ -58,7 +57,7 @@ public class TestFragment extends BaseFragment {
     private MainPresenter mainPresenter;
     private final List<String> categoryList = new ArrayList<>();
     private final List<SearchTestBo> dataList = new ArrayList();
-    private TestListAdapter TestAdapter;
+    private TestListAdapter testAdapter;
     private String curCategory = "";
 
     public static TestFragment getInstance() {
@@ -104,8 +103,8 @@ public class TestFragment extends BaseFragment {
 
     private void initRecycleView() {
         rcTestList.setLayoutManager(new LinearLayoutManager(getContext()));
-        TestAdapter = new TestListAdapter(R.layout.item_home_list, dataList);
-        rcTestList.setAdapter(TestAdapter);
+        testAdapter = new TestListAdapter(R.layout.item_home_list, dataList);
+        rcTestList.setAdapter(testAdapter);
     }
 
     @OnClick({R.id.tvTestAllBtn, R.id.etTest})
@@ -168,7 +167,7 @@ public class TestFragment extends BaseFragment {
             public void onLoadSuccess(List<SearchTestBo> resultList) {
                 dataList.clear();
                 dataList.addAll(resultList);
-                TestAdapter.notifyDataSetChanged();
+                testAdapter.notifyDataSetChanged();
             }
 
             @Override
