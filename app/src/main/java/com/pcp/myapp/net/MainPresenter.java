@@ -1,23 +1,20 @@
 package com.pcp.myapp.net;
 
-import com.google.gson.JsonObject;
 import com.pcp.myapp.bean.LoginBo;
+import com.pcp.myapp.bean.SearchBo;
 import com.pcp.myapp.net.contract.MainContract;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.RequestBody;
 
-public class MainPresenter extends BasePresenter<MainContract.View> implements MainContract.Presenter {
+public class MainPresenter extends BasePresenter<MainContract.View> {
 
     private Disposable disposable;
     private DataManager dataManager;
@@ -90,10 +87,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
                 });
     }
 
-
-
-    @Override
-    public void getCategoryList() {
+    public void getCategoryList(NetCallBack<List<String>> callBack) {
         Observable<BaseResponse<List<String>>> observable = dataManager.getCategoryList();
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -104,17 +98,79 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
                     }
 
                     @Override
-                    public void onNext(@NotNull BaseResponse<List<String>> articleBaseResponse) {
-                        if (articleBaseResponse.getErrorCode() != 0) {
-                            getView().showError(articleBaseResponse.getErrorMsg());
+                    public void onNext(@NotNull BaseResponse<List<String>> resultBo) {
+                        if (resultBo.getErrorCode() != 0) {
+                            callBack.onLoadFailed(resultBo.getErrorMsg());
                             return;
                         }
-                        getView().showCategoryList(articleBaseResponse.getData());
+                        callBack.onLoadSuccess(resultBo.getData());
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        getView().showError(e.getMessage());
+                        callBack.onLoadFailed(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public void search(String category, String keyword, NetCallBack<List<SearchBo>> callBack) {
+        Observable<BaseResponse<List<SearchBo>>> observable = dataManager.search(category, keyword);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseResponse<List<SearchBo>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onNext(@NotNull BaseResponse<List<SearchBo>> resultBo) {
+                        if (resultBo.getErrorCode() != 0) {
+                            callBack.onLoadFailed(resultBo.getErrorMsg());
+                            return;
+                        }
+                        callBack.onLoadSuccess(resultBo.getData());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callBack.onLoadFailed(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public void loadNewsDetail(String id, NetCallBack<SearchBo> callBack) {
+        Observable<BaseResponse<SearchBo>> observable = dataManager.loadNewsDetail(id);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseResponse<SearchBo>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onNext(@NotNull BaseResponse<SearchBo> resultBo) {
+                        if (resultBo.getErrorCode() != 0) {
+                            callBack.onLoadFailed(resultBo.getErrorMsg());
+                            return;
+                        }
+                        callBack.onLoadSuccess(resultBo.getData());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callBack.onLoadFailed(e.getMessage());
                     }
 
                     @Override

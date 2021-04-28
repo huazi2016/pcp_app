@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // 解决Fragment需要一个构造函数的问题
         super.onCreate(null);
+        //getWindow().setStatusBarColor(Utils.getColor(this));
         setContentView(R.layout.activity_main);
         EventBus.getDefault().register(this);
         mContext = getApplicationContext();

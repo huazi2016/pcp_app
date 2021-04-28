@@ -22,10 +22,7 @@ import com.pcp.myapp.custom.CustomEditText;
 import com.pcp.myapp.custom.loading.LoadingView;
 import com.pcp.myapp.net.DataManager;
 import com.pcp.myapp.net.NetCallBack;
-import com.pcp.myapp.net.contract.MainContract;
 import com.pcp.myapp.net.MainPresenter;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;

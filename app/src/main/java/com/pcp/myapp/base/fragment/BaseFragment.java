@@ -44,8 +44,8 @@ public abstract class BaseFragment extends Fragment {
             mRootView = inflater.inflate(getContentViewId(), container, false);
         }
         unbinder = ButterKnife.bind(this, mRootView);
-        init();
         initPresenter();
+        init();
         return mRootView;
     }
 

@@ -46,10 +46,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewId());
         unbinder = ButterKnife.bind(this);
+        initPresenter();
         activity = this;
         context = this;
         init(savedInstanceState);
-        initPresenter();
     }
 
     @Override
