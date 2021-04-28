@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/c_F4F4F4"
     android:orientation="vertical">
 
@@ -23,7 +23,22 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvMessageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="7dp"
+            android:text="留言"
+            android:textSize="10sp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:textColor="@color/white"
+            android:drawableTop="@drawable/chat_icon01"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,11 +46,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcChatList"
-        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         tools:itemCount="5"
-        tools:listitem="@layout/item_home_list"
-        android:layout_height="wrap_content" />
+        tools:listitem="@layout/item_home_list" />
 
     <include
         android:id="@+id/layout_error"

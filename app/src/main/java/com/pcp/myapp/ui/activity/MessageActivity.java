@@ -1,69 +1,85 @@
-package com.pcp.myapp.ui.fragment;
+package com.pcp.myapp.ui.activity;
 
-import android.graphics.Color;
-import android.os.Build;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 
-import androidx.core.graphics.ColorUtils;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.pcp.myapp.R;
-import com.pcp.myapp.base.fragment.BaseFragment;
-import com.pcp.myapp.bean.EventBo;
+import com.pcp.myapp.base.activity.BaseActivity;
 import com.pcp.myapp.bean.MessageListBo;
+import com.pcp.myapp.bean.SearchBo;
 import com.pcp.myapp.net.DataManager;
 import com.pcp.myapp.net.MainPresenter;
 import com.pcp.myapp.net.NetCallBack;
 import com.pcp.myapp.utils.LogUtils;
 
-import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
+import static com.pcp.myapp.base.application.MyApp.getContext;
 
-public class MessageFragment extends BaseFragment {
+public class MessageActivity extends BaseActivity {
 
     @BindView(R.id.rcMessageList)
     RecyclerView rcMessageList;
+    @BindView(R.id.tvCommonTitle)
+    AppCompatTextView tvCommonTitle;
     @BindView(R.id.layout_error)
     ViewGroup mLayoutError;
 
-    private MainPresenter chatPresenter;
+    private MainPresenter messagePresenter;
     private final List<MessageListBo> dataList = new ArrayList();
     private MessageListAdapter messageAdapter;
 
-    public static MessageFragment getInstance() {
-        MessageFragment fragment = new MessageFragment();
-        return fragment;
+    public static void launchActivity(Activity activity) {
+        Intent intent = new Intent(activity, MessageActivity.class);
+        activity.startActivity(intent);
     }
 
     @Override
     protected int getContentViewId() {
-        return R.layout.message_fragment;
+        return R.layout.activity_message;
     }
 
     @Override
-    protected void initPresenter() {
-        chatPresenter = new MainPresenter(new DataManager());
-    }
-
-    @Override
-    protected void init() {
-        initStatusBar();
+    protected void init(Bundle savedInstanceState) {
+        tvCommonTitle.setText("留言");
         initRecycleView();
         // TODO: 2021/4/28 模拟名称
         //loadMessageList(MmkvUtil.getUserName());
         loadMessageList("方玉龙");
+    }
+
+    @Override
+    protected void initPresenter() {
+        messagePresenter = new MainPresenter(new DataManager());
+    }
+
+    @OnClick({R.id.ivCommonBack})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ivCommonBack: {
+                finish();
+                break;
+            }
+            default: {
+                break;
+            }
+        }
     }
 
     private void initRecycleView() {
@@ -73,7 +89,7 @@ public class MessageFragment extends BaseFragment {
     }
 
     private void loadMessageList(String teacher) {
-        chatPresenter.loadMessageList(teacher, new NetCallBack<List<MessageListBo>>() {
+        messagePresenter.loadMessageList(teacher, new NetCallBack<List<MessageListBo>>() {
             @Override
             public void onLoadSuccess(List<MessageListBo> resultList) {
                 dataList.clear();
@@ -104,43 +120,5 @@ public class MessageFragment extends BaseFragment {
                 //NewsActivity.launchActivity(activity, searchBo.id + "");
             });
         }
-    }
-
-    private void initStatusBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
-        if (ColorUtils.calculateLuminance(Color.TRANSPARENT) >= 0.5) {
-            // 设置状态栏中字体的颜色为黑色
-            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        } else {
-            // 跟随系统
-            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        }
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        initStatusBar();
-    }
-
-    public void startLoadingView() {
-        EventBo e = new EventBo();
-        e.target = EventBo.TARGET_MAIN;
-        e.type = EventBo.TYPE_START_ANIMATION;
-        EventBus.getDefault().post(e);
-    }
-
-    public void stopLoadingView() {
-        EventBo e = new EventBo();
-        e.target = EventBo.TARGET_MAIN;
-        e.type = EventBo.TYPE_STOP_ANIMATION;
-        EventBus.getDefault().post(e);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
     }
 }

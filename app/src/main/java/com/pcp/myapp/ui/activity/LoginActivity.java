@@ -1,5 +1,6 @@
 package com.pcp.myapp.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -16,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.blankj.utilcode.util.ToastUtils;
 import com.pcp.myapp.R;
 import com.pcp.myapp.base.activity.BaseActivity;
+import com.pcp.myapp.base.utils.Constant;
 import com.pcp.myapp.base.utils.Utils;
 import com.pcp.myapp.bean.LoginBo;
 import com.pcp.myapp.custom.CustomEditText;
@@ -50,6 +53,12 @@ public class LoginActivity extends BaseActivity {
     Toolbar mToolbar;
 
     private MainPresenter loginPresenter;
+    private long mExitTime = 0;
+
+    public static void launchActivity(Activity activity) {
+        Intent intent = new Intent(activity, LoginActivity.class);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected int getContentViewId() {
@@ -122,6 +131,18 @@ public class LoginActivity extends BaseActivity {
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        long curTime = System.currentTimeMillis();
+        if (curTime - mExitTime > Constant.EXIT_TIME) {
+            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            mExitTime = curTime;
+        } else {
+            super.onBackPressed();
+            //System.exit(0);
+        }
     }
 
 

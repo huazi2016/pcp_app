@@ -24,8 +24,7 @@ import com.pcp.myapp.base.utils.Utils;
 import com.pcp.myapp.bean.EventBo;
 import com.pcp.myapp.ui.fragment.ChatFragment;
 import com.pcp.myapp.ui.fragment.HomeFragment;
-import com.pcp.myapp.ui.fragment.MessageFragment;
-import com.pcp.myapp.ui.fragment.ProjectFragment;
+import com.pcp.myapp.ui.fragment.MineFragment;
 import com.pcp.myapp.ui.fragment.TestFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -181,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                     fragment = ChatFragment.getInstance();
                     break;
                 case INDEX_WE_CHAT:
-                    fragment = MessageFragment.getInstance();
+                    fragment = MineFragment.getInstance();
                     break;
                 default:
                     break;

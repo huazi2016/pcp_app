@@ -6,7 +6,6 @@ import java.util.List;
 /**
  * author : huazi
  * time   : 2021/4/27
- * company：inkr
  * desc   : 分类
  */
 public class CategoryBo implements Serializable {

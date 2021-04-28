@@ -20,6 +20,7 @@ import com.pcp.myapp.bean.EventBo;
 import com.pcp.myapp.net.DataManager;
 import com.pcp.myapp.net.MainPresenter;
 import com.pcp.myapp.net.NetCallBack;
+import com.pcp.myapp.ui.activity.MessageActivity;
 import com.pcp.myapp.utils.LogUtils;
 import com.pcp.myapp.utils.MmkvUtil;
 
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 
 public class ChatFragment extends BaseFragment {
@@ -41,6 +43,8 @@ public class ChatFragment extends BaseFragment {
     RecyclerView rcChatList;
     @BindView(R.id.layout_error)
     ViewGroup mLayoutError;
+    @BindView(R.id.tvMessageBtn)
+    AppCompatTextView tvMessageBtn;
 
     private MainPresenter chatPresenter;
     private final List<ChatListBo> dataList = new ArrayList();
@@ -78,24 +82,18 @@ public class ChatFragment extends BaseFragment {
         rcChatList.setAdapter(chatAdapter);
     }
 
-//    @OnClick({R.id.tvTestAllBtn, R.id.etTest})
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.tvTestAllBtn: {
-//                //分类按钮
-//                showSelectPop();
-//                break;
-//            }
-//            case R.id.etTest: {
-//                //分类按钮
-//                loadCategoryList();
-//                break;
-//            }
-//            default: {
-//                break;
-//            }
-//        }
-//    }
+    @OnClick({R.id.tvMessageBtn})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tvMessageBtn: {
+                MessageActivity.launchActivity(activity);
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    }
 
     private void loadChatList(String role) {
         chatPresenter.loadChatList(role, new NetCallBack<List<ChatListBo>>() {
