@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginBottom="10dp"
+    android:background="@color/white"
+    android:padding="10dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvChatName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="xx老师"
+        android:textColor="@color/c_666666"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvChatStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        tools:text="在线"
+        android:textColor="@color/c_666666"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvChatBtn01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="聊天"
+        android:paddingTop="@dimen/dp05"
+        android:paddingBottom="@dimen/dp05"
+        android:paddingLeft="@dimen/dp12"
+        android:paddingRight="@dimen/dp12"
+        android:background="#D5678C"
+        android:layout_marginTop="@dimen/dp12"
+        android:textColor="@color/c_white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvChatStatus" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvChatBtn02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="留言"
+        android:background="#8E61DD"
+        android:paddingTop="@dimen/dp05"
+        android:paddingBottom="@dimen/dp05"
+        android:paddingLeft="@dimen/dp12"
+        android:paddingRight="@dimen/dp12"
+        android:textColor="@color/c_white"
+        android:textSize="16sp"
+        android:layout_marginRight="@dimen/dp30"
+        app:layout_constraintEnd_toStartOf="@+id/tvChatBtn01"
+        app:layout_constraintTop_toBottomOf="@+id/tvChatStatus" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

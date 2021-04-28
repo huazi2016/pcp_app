@@ -88,7 +88,7 @@ public class DataManager {
         return apiService.loadMessageList(teacher);
     }
 
-    public Observable<BaseResponse<String>> loadAnswer(String psyId){
+    public Observable<BaseResponse<ChatListBo>> loadAnswer(String psyId){
         return apiService.loadAnswer(psyId, MmkvUtil.getUserName());
     }
 

@@ -12,6 +12,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import com.pcp.myapp.R;
 import com.pcp.myapp.base.activity.BaseActivity;
+import com.pcp.myapp.bean.ChatListBo;
 import com.pcp.myapp.net.DataManager;
 import com.pcp.myapp.net.MainPresenter;
 import com.pcp.myapp.net.NetCallBack;
@@ -84,14 +85,14 @@ public class TestActivity extends BaseActivity {
     }
 
     private void loadAnswer(String id) {
-        newPresenter.loadAnswer(id, new NetCallBack<String>() {
+        newPresenter.loadAnswer(id, new NetCallBack<ChatListBo>() {
             @Override
-            public void onLoadSuccess(String result) {
-                if (!TextUtils.isEmpty(result)) {
+            public void onLoadSuccess(ChatListBo resultBo) {
+                if (resultBo != null && !TextUtils.isEmpty(resultBo.answer)) {
                     etTestAnswer.setVisibility(View.GONE);
                     tvTestCommit.setVisibility(View.GONE);
                     tvTestAnswer.setVisibility(View.VISIBLE);
-                    tvTestAnswer.setText("答案: " + result);
+                    tvTestAnswer.setText("答案: " + resultBo.answer);
                 } else {
                     etTestAnswer.setVisibility(View.VISIBLE);
                     tvTestCommit.setVisibility(View.VISIBLE);
@@ -125,7 +126,7 @@ public class TestActivity extends BaseActivity {
                 etTestAnswer.setVisibility(View.GONE);
                 tvTestCommit.setVisibility(View.GONE);
                 tvTestAnswer.setVisibility(View.VISIBLE);
-                tvTestAnswer.setText("答案: " + result);
+                tvTestAnswer.setText("答案: " + answer);
             }
 
             @Override

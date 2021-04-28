@@ -308,18 +308,18 @@ public class MainPresenter extends BasePresenter<MainContract.View> {
                 });
     }
 
-    public void loadAnswer(String psyId, NetCallBack<String> callBack) {
-        Observable<BaseResponse<String>> observable = dataManager.loadAnswer(psyId);
+    public void loadAnswer(String psyId, NetCallBack<ChatListBo> callBack) {
+        Observable<BaseResponse<ChatListBo>> observable = dataManager.loadAnswer(psyId);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<BaseResponse<String>>() {
+                .subscribe(new Observer<BaseResponse<ChatListBo>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         disposable = d;
                     }
 
                     @Override
-                    public void onNext(@NotNull BaseResponse<String> resultBo) {
+                    public void onNext(@NotNull BaseResponse<ChatListBo> resultBo) {
                         if (resultBo.getErrorCode() != 0) {
                             callBack.onLoadFailed(resultBo.getErrorMsg());
                             return;

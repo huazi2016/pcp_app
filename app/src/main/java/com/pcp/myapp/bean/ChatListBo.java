@@ -12,4 +12,7 @@ public class ChatListBo {
     public String role;
     public String token;
     public String onlineTime;
+    public String psyId;
+    public String answer;
+    public String time;
 }

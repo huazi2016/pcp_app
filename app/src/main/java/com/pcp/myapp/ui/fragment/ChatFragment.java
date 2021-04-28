@@ -2,6 +2,7 @@ package com.pcp.myapp.ui.fragment;
 
 import android.graphics.Color;
 import android.os.Build;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -11,6 +12,7 @@ import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.pcp.myapp.R;
@@ -78,7 +80,7 @@ public class ChatFragment extends BaseFragment {
 
     private void initRecycleView() {
         rcChatList.setLayoutManager(new LinearLayoutManager(getContext()));
-        chatAdapter = new ChatListAdapter(R.layout.item_home_list, dataList);
+        chatAdapter = new ChatListAdapter(R.layout.item_chat_list, dataList);
         rcChatList.setAdapter(chatAdapter);
     }
 
@@ -121,10 +123,25 @@ public class ChatFragment extends BaseFragment {
         protected void convert(@NotNull BaseViewHolder holder, ChatListBo chatBo) {
             //holder.setText(R.id.tvHomeName, searchBo.username);
             //holder.setText(R.id.tvHomeTime, searchBo.time);
-            holder.setText(R.id.tvHomeTitle, chatBo.role);
-            holder.setText(R.id.tvHomeContent, chatBo.username);
-            holder.itemView.setOnClickListener(v -> {
-                //NewsActivity.launchActivity(activity, searchBo.id + "");
+            holder.setText(R.id.tvChatName, chatBo.username);
+            String text01 = "离线";
+            if (!TextUtils.isEmpty(chatBo.onlineTime)) {
+                text01 = "在线";
+            }
+            holder.setText(R.id.tvChatStatus, text01);
+            holder.getView(R.id.tvChatBtn01).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //聊天
+                    ToastUtils.showShort("聊天");
+                }
+            });
+            holder.getView(R.id.tvChatBtn02).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //留言
+                    ToastUtils.showShort("留言");
+                }
             });
         }
     }

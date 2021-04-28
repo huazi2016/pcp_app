@@ -64,7 +64,7 @@ public interface ApiService {
     );
 
     @GET("/api/psy/my/answer")
-    Observable<BaseResponse<String>> loadAnswer(
+    Observable<BaseResponse<ChatListBo>> loadAnswer(
             @Query("psyId") String psyId,
             @Query("username") String username
     );
