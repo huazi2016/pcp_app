@@ -27,6 +27,7 @@ import com.pcp.myapp.net.DataManager;
 import com.pcp.myapp.net.MainPresenter;
 import com.pcp.myapp.net.NetCallBack;
 import com.pcp.myapp.ui.activity.NewsActivity;
+import com.pcp.myapp.ui.activity.TestActivity;
 import com.pcp.myapp.utils.LogUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -103,7 +104,7 @@ public class TestFragment extends BaseFragment {
 
     private void initRecycleView() {
         rcTestList.setLayoutManager(new LinearLayoutManager(getContext()));
-        testAdapter = new TestListAdapter(R.layout.item_home_list, dataList);
+        testAdapter = new TestListAdapter(R.layout.item_test_list, dataList);
         rcTestList.setAdapter(testAdapter);
     }
 
@@ -185,13 +186,11 @@ public class TestFragment extends BaseFragment {
 
         @Override
         protected void convert(@NotNull BaseViewHolder holder, SearchTestBo searchBo) {
-            //holder.setText(R.id.tvHomeName, searchBo.username);
-            //holder.setText(R.id.tvHomeTime, searchBo.time);
+            holder.setText(R.id.tvHomeCategory, searchBo.category);
             holder.setText(R.id.tvHomeTitle, searchBo.title);
             holder.setText(R.id.tvHomeContent, searchBo.content);
-            holder.setText(R.id.tvHomeCategory, "所属分类：" + searchBo.category);
             holder.itemView.setOnClickListener(v -> {
-                NewsActivity.launchActivity(activity, searchBo.id + "");
+                TestActivity.launchActivity(activity, searchBo.id + "", searchBo.title, searchBo.content);
             });
         }
     }

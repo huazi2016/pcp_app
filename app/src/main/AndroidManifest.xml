@@ -27,7 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
         </activity>
-
         <activity
             android:name=".ui.activity.SplashActivity"
             android:theme="@style/App.Theme.Launch">
@@ -36,7 +35,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
         </activity>
-
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
@@ -46,18 +44,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.activity.RegisterActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.NewsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.MessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.TestActivity"
             android:screenOrientation="portrait" />
 
     </application>

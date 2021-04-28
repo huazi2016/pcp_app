@@ -6,6 +6,7 @@ import com.pcp.myapp.bean.LoginBo;
 import com.pcp.myapp.bean.MessageListBo;
 import com.pcp.myapp.bean.SearchBo;
 import com.pcp.myapp.bean.SearchTestBo;
+import com.pcp.myapp.utils.MmkvUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,5 +86,20 @@ public class DataManager {
 
     public Observable<BaseResponse<List<MessageListBo>>> loadMessageList(String teacher){
         return apiService.loadMessageList(teacher);
+    }
+
+    public Observable<BaseResponse<String>> loadAnswer(String psyId){
+        return apiService.loadAnswer(psyId, MmkvUtil.getUserName());
+    }
+
+    public Observable<BaseResponse<String>> commitAnswer(String psyId, String answer){
+        HashMap<String, String> jsonMap = new HashMap();
+        jsonMap.put("psyId", psyId);
+        jsonMap.put("username", MmkvUtil.getUserName());
+        jsonMap.put("answer", answer);
+        String json = new Gson().toJson(jsonMap);
+        String contentType = "application/json;charset=UTF-8";
+        RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
+        return apiService.commitAnswer(body);
     }
 }

@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -100,22 +99,6 @@ public class MainActivity extends BaseActivity {
     protected void initPresenter() {
 
     }
-
-   //@Override
-   //protected void onCreate(Bundle savedInstanceState) {
-   //    // 解决Fragment需要一个构造函数的问题
-   //    super.onCreate(null);
-   //    setContentView(R.layout.activity_main);
-   //    mContext = getApplicationContext();
-   //    mBinder = ButterKnife.bind(this);
-   //    initBottomNavigation();
-   //    // 判断当前是recreate还是新启动
-   //    if (savedInstanceState == null) {
-   //        switchFragment(INDEX_HOMEPAGE);
-   //    }
-   //    mBottomNavigationView.setItemIconTintList(Utils.getColorStateList(mContext));
-   //    mBottomNavigationView.setItemTextColor(Utils.getColorStateList(mContext));
-   //}
 
     @Override
     protected void onDestroy() {

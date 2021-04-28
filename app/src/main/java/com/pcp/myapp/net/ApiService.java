@@ -62,4 +62,13 @@ public interface ApiService {
             @Query("teacher") String teacher
             //@Query("reply") String reply
     );
+
+    @GET("/api/psy/my/answer")
+    Observable<BaseResponse<String>> loadAnswer(
+            @Query("psyId") String psyId,
+            @Query("username") String username
+    );
+
+    @POST("/api/psy/test/answer")
+    Observable<BaseResponse<String>> commitAnswer(@Body RequestBody body);
 }
