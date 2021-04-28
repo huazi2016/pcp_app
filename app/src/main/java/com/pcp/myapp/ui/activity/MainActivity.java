@@ -1,11 +1,5 @@
 package com.pcp.myapp.ui.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -14,14 +8,19 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
-import com.pcp.myapp.base.utils.Constant;
-import com.pcp.myapp.custom.loading.LoadingView;
-import com.pcp.myapp.R;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.pcp.myapp.R;
+import com.pcp.myapp.base.utils.Constant;
 import com.pcp.myapp.base.utils.Utils;
 import com.pcp.myapp.bean.EventBo;
+import com.pcp.myapp.custom.loading.LoadingView;
 import com.pcp.myapp.ui.fragment.ChatFragment;
 import com.pcp.myapp.ui.fragment.HomeFragment;
 import com.pcp.myapp.ui.fragment.MineFragment;
@@ -39,6 +38,11 @@ import q.rorbin.badgeview.QBadgeView;
 
 public class MainActivity extends AppCompatActivity {
 
+    @BindView(R.id.navigation_bottom)
+    BottomNavigationView mBottomNavigationView;
+    @BindView(R.id.loading_view)
+    LoadingView mLoadingView;
+
     private static final int INDEX_HOMEPAGE = 0;
     private static final int INDEX_PROJECT = 1;
     private static final int INDEX_SQUARE = 2;
@@ -46,24 +50,12 @@ public class MainActivity extends AppCompatActivity {
     private static final int INDEX_ME = 4;
 
     private SparseArray<Fragment> mFragmentSparseArray = new SparseArray<>();
-
     private Fragment mCurrentFragment;
-
     private Fragment mLastFragment;
-
     private int mLastIndex = -1;
-
     private long mExitTime = 0;
-
     private Context mContext;
-
     Unbinder mBinder;
-
-    @BindView(R.id.navigation_bottom)
-    BottomNavigationView mBottomNavigationView;
-
-    @BindView(R.id.loading_view)
-    LoadingView mLoadingView;
 
     public static void launchActivity(Activity activity) {
         Intent intent = new Intent(activity, MainActivity.class);
@@ -89,9 +81,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // 解决Fragment需要一个构造函数的问题
         super.onCreate(null);
-        //getWindow().setStatusBarColor(Utils.getColor(this));
         setContentView(R.layout.activity_main);
-        EventBus.getDefault().register(this);
         mContext = getApplicationContext();
         mBinder = ButterKnife.bind(this);
         initBottomNavigation();
@@ -101,8 +91,6 @@ public class MainActivity extends AppCompatActivity {
         }
         mBottomNavigationView.setItemIconTintList(Utils.getColorStateList(mContext));
         mBottomNavigationView.setItemTextColor(Utils.getColorStateList(mContext));
-
-
     }
 
     @Override

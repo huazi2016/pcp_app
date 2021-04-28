@@ -67,7 +67,7 @@
             android:layout_marginTop="1dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:text="点我登陆"
+            android:text="昵称"
             android:textColor="@color/c_white"
             android:textSize="24dp"
             app:layout_constraintBottom_toBottomOf="@+id/ivMineHead"
