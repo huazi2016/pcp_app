@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.pcp.myapp.R;
+import com.pcp.myapp.base.activity.BaseActivity;
 import com.pcp.myapp.base.utils.Constant;
 import com.pcp.myapp.base.utils.Utils;
 import com.pcp.myapp.bean.EventBo;
@@ -36,7 +37,7 @@ import butterknife.Unbinder;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @BindView(R.id.navigation_bottom)
     BottomNavigationView mBottomNavigationView;
@@ -78,10 +79,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        // 解决Fragment需要一个构造函数的问题
-        super.onCreate(null);
-        setContentView(R.layout.activity_main);
+    protected int getContentViewId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void init(Bundle savedInstanceState) {
         mContext = getApplicationContext();
         mBinder = ButterKnife.bind(this);
         initBottomNavigation();
@@ -92,6 +95,27 @@ public class MainActivity extends AppCompatActivity {
         mBottomNavigationView.setItemIconTintList(Utils.getColorStateList(mContext));
         mBottomNavigationView.setItemTextColor(Utils.getColorStateList(mContext));
     }
+
+    @Override
+    protected void initPresenter() {
+
+    }
+
+   //@Override
+   //protected void onCreate(Bundle savedInstanceState) {
+   //    // 解决Fragment需要一个构造函数的问题
+   //    super.onCreate(null);
+   //    setContentView(R.layout.activity_main);
+   //    mContext = getApplicationContext();
+   //    mBinder = ButterKnife.bind(this);
+   //    initBottomNavigation();
+   //    // 判断当前是recreate还是新启动
+   //    if (savedInstanceState == null) {
+   //        switchFragment(INDEX_HOMEPAGE);
+   //    }
+   //    mBottomNavigationView.setItemIconTintList(Utils.getColorStateList(mContext));
+   //    mBottomNavigationView.setItemTextColor(Utils.getColorStateList(mContext));
+   //}
 
     @Override
     protected void onDestroy() {
