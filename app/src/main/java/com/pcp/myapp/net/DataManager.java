@@ -171,7 +171,7 @@ public class DataManager {
         return apiService.deleteNews(id);
     }
 
-    public Observable<BaseResponse<SearchBo>> getCommentsList(String id){
+    public Observable<BaseResponse<List<SearchBo>>> getCommentsList(String id){
         return apiService.getCommentsList(id);
     }
 

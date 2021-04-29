@@ -79,6 +79,7 @@ public class NewsActivity extends BaseActivity {
             }
             case R.id.tvDeleteBtn: {
                 deleteNews(id);
+                //CommentActivity.launchActivity(activity, "");
                 break;
             }
             default: {

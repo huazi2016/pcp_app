@@ -98,7 +98,7 @@ public interface ApiService {
     );
 
     @GET("/api/comment/list")
-    Observable<BaseResponse<SearchBo>> getCommentsList(
+    Observable<BaseResponse<List<SearchBo>>> getCommentsList(
             @Query("articleId") String id
     );
 

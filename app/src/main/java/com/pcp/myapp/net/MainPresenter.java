@@ -557,18 +557,18 @@ public class MainPresenter extends BasePresenter<MainContract.View> {
                 });
     }
 
-    public void getCommentsList(String id, NetCallBack<SearchBo> callBack) {
-        Observable<BaseResponse<SearchBo>> observable = dataManager.getCommentsList(id);
+    public void getCommentsList(String id, NetCallBack<List<SearchBo>> callBack) {
+        Observable<BaseResponse<List<SearchBo>>> observable = dataManager.getCommentsList(id);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<BaseResponse<SearchBo>>() {
+                .subscribe(new Observer<BaseResponse<List<SearchBo>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         disposable = d;
                     }
 
                     @Override
-                    public void onNext(@NotNull BaseResponse<SearchBo> resultBo) {
+                    public void onNext(@NotNull BaseResponse<List<SearchBo>> resultBo) {
                         if (resultBo.getErrorCode() != 0) {
                             callBack.onLoadFailed(resultBo.getErrorMsg());
                             return;
