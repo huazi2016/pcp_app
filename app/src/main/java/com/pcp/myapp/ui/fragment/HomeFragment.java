@@ -2,16 +2,12 @@ package com.pcp.myapp.ui.fragment;
 
 import android.graphics.Color;
 import android.os.Build;
-import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.graphics.ColorUtils;
@@ -26,18 +22,20 @@ import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.pcp.myapp.R;
 import com.pcp.myapp.base.fragment.BaseFragment;
+import com.pcp.myapp.base.utils.Utils;
+import com.pcp.myapp.bean.EditEventBo;
 import com.pcp.myapp.bean.EventBo;
-import com.pcp.myapp.bean.LoginBo;
 import com.pcp.myapp.bean.SearchBo;
 import com.pcp.myapp.net.DataManager;
 import com.pcp.myapp.net.MainPresenter;
 import com.pcp.myapp.net.NetCallBack;
-import com.pcp.myapp.ui.activity.MainActivity;
+import com.pcp.myapp.ui.activity.EditActivity;
 import com.pcp.myapp.ui.activity.NewsActivity;
 import com.pcp.myapp.utils.LogUtils;
+import com.pcp.myapp.utils.MmkvUtil;
+import com.tencent.mmkv.MMKV;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Logger;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
@@ -62,13 +60,12 @@ public class HomeFragment extends BaseFragment {
 
     @BindView(R.id.tvAllBtn)
     AppCompatTextView tvAllBtn;
-
+    @BindView(R.id.tvHomeAdd)
+    AppCompatTextView tvHomeAdd;
     @BindView(R.id.etHome)
     AppCompatEditText etHome;
-
     @BindView(R.id.rcHomeList)
     RecyclerView rcHomeList;
-
     @BindView(R.id.layout_error)
     ViewGroup mLayoutError;
 
@@ -97,6 +94,7 @@ public class HomeFragment extends BaseFragment {
     protected void init() {
         initStatusBar();
         initRecycleView();
+        EventBus.getDefault().register(this);
         loadCategoryList();
         search("", "");
         //跟随光标搜索
@@ -117,6 +115,9 @@ public class HomeFragment extends BaseFragment {
 
             }
         });
+        if (MmkvUtil.isAdmin()) {
+            tvHomeAdd.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initRecycleView() {
@@ -125,7 +126,7 @@ public class HomeFragment extends BaseFragment {
         rcHomeList.setAdapter(homeAdapter);
     }
 
-    @OnClick({R.id.tvAllBtn, R.id.etHome})
+    @OnClick({R.id.tvAllBtn, R.id.tvHomeAdd})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvAllBtn: {
@@ -133,9 +134,8 @@ public class HomeFragment extends BaseFragment {
                 showSelectPop();
                 break;
             }
-            case R.id.etHome: {
-                //分类按钮
-                loadCategoryList();
+            case R.id.tvHomeAdd: {
+                EditActivity.launchActivity(activity, "");
                 break;
             }
             default: {
@@ -247,25 +247,14 @@ public class HomeFragment extends BaseFragment {
         EventBus.getDefault().post(e);
     }
 
-    @OnClick(R.id.layout_error)
-    public void onReTry() {
-        //setNetWorkError(true);
-        //mPresenter.loadBanner();
-        //mPresenter.loadArticle(0);
-    }
-
-    //private void setNetWorkError(boolean isSuccess) {
-    //    if (isSuccess) {
-    //        mNormalView.setVisibility(View.VISIBLE);
-    //        mLayoutError.setVisibility(View.GONE);
-    //    } else {
-    //        mNormalView.setVisibility(View.GONE);
-    //        mLayoutError.setVisibility(View.VISIBLE);
-    //    }
-    //}
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(EditEventBo event) {
+        search(curCategory, "");
     }
 }

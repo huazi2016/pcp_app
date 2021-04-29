@@ -88,4 +88,7 @@ public interface ApiService {
 
     @POST("/api/message/send")
     Observable<BaseResponse<ChatMsgBo>> replyTeacherMsg(@Body RequestBody body);
+
+    @POST("/api/article/add")
+    Observable<BaseResponse<SearchBo>> addNews(@Body RequestBody body);
 }

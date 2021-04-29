@@ -149,4 +149,17 @@ public class DataManager {
         RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
         return apiService.replyTeacherMsg(body);
     }
+
+    public Observable<BaseResponse<SearchBo>> addNews(String name, String category, String title, String content) {
+        HashMap<String, String> jsonMap = new HashMap();
+        jsonMap.put("username", name);
+        jsonMap.put("category", category);
+        jsonMap.put("title", title);
+        jsonMap.put("content", content);
+        String json = new Gson().toJson(jsonMap);
+        LogUtils.d("okhttp:==" + json);
+        String contentType = "application/json;charset=UTF-8";
+        RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
+        return apiService.addNews(body);
+    }
 }

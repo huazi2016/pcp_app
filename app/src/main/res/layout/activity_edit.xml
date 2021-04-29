@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_EEEEEE"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/newsWebTitle"
+        layout="@layout/common_title_layout" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPbName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp10"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:textColor="@color/c_666666"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHomeTitle"
+        tools:text="发布者:张三     日期:xx/xx/xx" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPbAllBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@color/c_white"
+        android:drawableRight="@drawable/home_arrow"
+        android:drawablePadding="5dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:text="请选择分类：全部"
+        android:textColor="@color/c_333333"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etFbTitle"
+        style="@style/editText_style02"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:hint="请输入标题"
+        android:layout_marginTop="@dimen/dp10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvPbTitle"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etPbDesc"
+        style="@style/editText_style01"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:gravity="top"
+        android:hint="请你输入内容"
+        android:paddingTop="@dimen/dp15" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPbSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp40"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/dp50"
+        android:layout_marginTop="@dimen/dp28"
+        android:layout_marginRight="@dimen/dp50"
+        android:background="@drawable/shape_f35463_cor8"
+        android:gravity="center"
+        android:text="提交"
+        android:textColor="@color/c_white"
+        android:textSize="@dimen/sp13"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvUsVersion" />
+
+</LinearLayout>

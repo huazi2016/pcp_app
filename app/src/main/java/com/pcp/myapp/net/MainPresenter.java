@@ -495,6 +495,37 @@ public class MainPresenter extends BasePresenter<MainContract.View> {
                 });
     }
 
+    public void addNews(String name, String category, String title, String content, NetCallBack<SearchBo> callBack) {
+        Observable<BaseResponse<SearchBo>> observable = dataManager.addNews(name, category, title, content);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseResponse<SearchBo>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onNext(@NotNull BaseResponse<SearchBo> resultBo) {
+                        if (resultBo.getErrorCode() != 0) {
+                            callBack.onLoadFailed(resultBo.getErrorMsg());
+                            return;
+                        }
+                        callBack.onLoadSuccess(resultBo.getData());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callBack.onLoadFailed(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
     @Override
     public void detachView() {
         super.detachView();

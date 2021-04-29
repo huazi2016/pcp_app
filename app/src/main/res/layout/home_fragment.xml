@@ -1,15 +1,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/c_F4F4F4"
     android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
-        android:background="@color/colorPrimary"
-        android:layout_height="@dimen/dp26"/>
+        android:layout_height="@dimen/dp26"
+        android:background="@color/colorPrimary" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -51,13 +51,38 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcHomeList"
-        android:layout_marginTop="15dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        tools:itemCount="5"
-        tools:listitem="@layout/item_home_list"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcHomeList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_home_list" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvHomeAdd"
+            android:layout_width="@dimen/dp50"
+            android:layout_height="@dimen/dp50"
+            android:layout_marginRight="@dimen/dp20"
+            android:layout_marginBottom="@dimen/dp40"
+            android:background="@drawable/shape_home_bg"
+            android:gravity="center"
+            android:text="新增"
+            android:textColor="@color/c_white"
+            android:textSize="@dimen/sp14"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include
         android:id="@+id/layout_error"

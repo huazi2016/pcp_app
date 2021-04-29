@@ -93,4 +93,28 @@
         <item name="android:maxWidth">24dp</item>
         <item name="android:maxHeight">24dp</item>
     </style>
+
+    <!--输入框样式-->
+    <style name="editText_style01">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp220</item>
+        <item name="android:textColor">@color/c_333333</item>
+        <item name="android:textColorHint">@color/c_999999</item>
+        <item name="android:paddingLeft">@dimen/dp15</item>
+        <item name="android:paddingRight">@dimen/dp15</item>
+        <item name="android:background">@color/c_white</item>
+        <item name="android:textSize">@dimen/sp14</item>
+    </style>
+
+    <style name="editText_style02">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp44</item>
+        <item name="android:textColor">@color/c_333333</item>
+        <item name="android:textColorHint">@color/c_999999</item>
+        <item name="android:paddingLeft">@dimen/dp15</item>
+        <item name="android:paddingRight">@dimen/dp15</item>
+        <item name="android:background">@drawable/shape_0f1e45_cor4</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textSize">@dimen/sp14</item>
+    </style>
 </resources>
