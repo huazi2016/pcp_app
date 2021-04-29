@@ -22,6 +22,7 @@ import com.pcp.myapp.bean.EventBo;
 import com.pcp.myapp.net.DataManager;
 import com.pcp.myapp.net.MainPresenter;
 import com.pcp.myapp.net.NetCallBack;
+import com.pcp.myapp.ui.activity.ChatActivity;
 import com.pcp.myapp.ui.activity.MessageActivity;
 import com.pcp.myapp.utils.LogUtils;
 import com.pcp.myapp.utils.MmkvUtil;
@@ -133,7 +134,7 @@ public class ChatFragment extends BaseFragment {
                 @Override
                 public void onClick(View view) {
                     //聊天
-                    ToastUtils.showShort("聊天");
+                    ChatActivity.launchActivity(activity, chatBo.id + "", chatBo.username);
                 }
             });
             holder.getView(R.id.tvChatBtn02).setOnClickListener(new View.OnClickListener() {

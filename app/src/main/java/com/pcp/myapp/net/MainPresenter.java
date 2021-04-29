@@ -1,6 +1,7 @@
 package com.pcp.myapp.net;
 
 import com.pcp.myapp.bean.ChatListBo;
+import com.pcp.myapp.bean.ChatMsgBo;
 import com.pcp.myapp.bean.LoginBo;
 import com.pcp.myapp.bean.MessageListBo;
 import com.pcp.myapp.bean.SearchBo;
@@ -351,6 +352,68 @@ public class MainPresenter extends BasePresenter<MainContract.View> {
 
                     @Override
                     public void onNext(@NotNull BaseResponse<String> resultBo) {
+                        if (resultBo.getErrorCode() != 0) {
+                            callBack.onLoadFailed(resultBo.getErrorMsg());
+                            return;
+                        }
+                        callBack.onLoadSuccess(resultBo.getData());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callBack.onLoadFailed(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public void getMsgList(String student, String teacher, String id, NetCallBack<List<ChatMsgBo>> callBack) {
+        Observable<BaseResponse<List<ChatMsgBo>>> observable = dataManager.getMsgList(student, teacher, id);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseResponse<List<ChatMsgBo>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onNext(@NotNull BaseResponse<List<ChatMsgBo>> resultBo) {
+                        if (resultBo.getErrorCode() != 0) {
+                            callBack.onLoadFailed(resultBo.getErrorMsg());
+                            return;
+                        }
+                        callBack.onLoadSuccess(resultBo.getData());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callBack.onLoadFailed(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public void sendMessage(String send, String receive, String content, NetCallBack<ChatMsgBo> callBack) {
+        Observable<BaseResponse<ChatMsgBo>> observable = dataManager.sendMessage(send, receive, content);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseResponse<ChatMsgBo>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onNext(@NotNull BaseResponse<ChatMsgBo> resultBo) {
                         if (resultBo.getErrorCode() != 0) {
                             callBack.onLoadFailed(resultBo.getErrorMsg());
                             return;

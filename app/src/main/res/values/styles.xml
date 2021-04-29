@@ -56,4 +56,41 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:textSize">15sp</item>
     </style>
+
+    <declare-styleable name="ChatKeyboardLayout">
+        <attr name="sendButtonBackground" format="reference|color" />
+        <attr name="sendButtonText" format="string|reference" />
+        <attr name="sendButtonTextColor" format="reference|color" />
+        <!-- set keyboard style, default is text_only -->
+        <attr name="keyboardStyle" format="enum">
+            <enum name="text_only" value="1" />
+            <enum name="text_emoticon" value="2" />
+            <enum name="chat_style" value="3" />
+        </attr>
+        <!-- face icon, you can use state_selected attribute-->
+        <attr name="faceIcon" format="reference" />
+        <!-- keyboard chat style, left default icon drawable -->
+        <attr name="leftDefaultIcon" format="reference" />
+        <!-- keyboard chat style, left showed icon after clicked -->
+        <attr name="leftSecondIcon" format="reference" />
+        <!-- keyboard chat style, right default shown icon -->
+        <attr name="rightIcon" format="reference" />
+        <!-- keyboard chat style, whether show right icon  or just show send buttonßßß-->
+        <attr name="showRightIcon" format="boolean" />
+    </declare-styleable>
+
+    <style name="common_cutline_eeeeee">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">#EEEEEE</item>
+    </style>
+
+    <!--圆形ProgressBar-->
+    <style name="black_progress_circle">
+        <item name="android:indeterminateDrawable">@drawable/progressbar_circle_h</item>
+        <item name="android:minWidth">20dp</item>
+        <item name="android:minHeight">20dp</item>
+        <item name="android:maxWidth">24dp</item>
+        <item name="android:maxHeight">24dp</item>
+    </style>
 </resources>

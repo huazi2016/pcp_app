@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_alignParentBottom="true"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <View
+        android:id="@+id/view"
+        style="@style/common_cutline_eeeeee"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/view_keyboard_input_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:layout_weight="1">
+
+            <com.pcp.myapp.custom.chat.HadEditText
+                android:id="@+id/et_chat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/shape_chat_from_bg"
+                android:focusable="true"
+                android:focusableInTouchMode="false"
+                android:layout_centerVertical="true"
+                android:inputType="textMultiLine"
+                android:lineSpacingExtra="2dp"
+                android:maxHeight="60dp"
+                android:maxLines="3"
+                android:minHeight="35dp"
+                android:paddingBottom="6dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="6dp"
+                android:scrollHorizontally="false"
+                android:singleLine="false"
+                android:textColorHint="#9A9A9A"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true">
+
+            <ProgressBar
+                android:id="@+id/pb_keyboard_right_icon"
+                android:layout_width="wrap_content"
+                style="@style/black_progress_circle"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="15dp"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp"
+                android:background="@null"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/iv_keyboard_send_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="15dp"
+                android:src="@drawable/private_msg_send_nomal"
+                android:textSize="14sp"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/view_keyboard_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:visibility="gone"/>
+</LinearLayout>

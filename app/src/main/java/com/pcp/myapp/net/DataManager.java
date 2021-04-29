@@ -2,6 +2,7 @@ package com.pcp.myapp.net;
 
 import com.google.gson.Gson;
 import com.pcp.myapp.bean.ChatListBo;
+import com.pcp.myapp.bean.ChatMsgBo;
 import com.pcp.myapp.bean.LoginBo;
 import com.pcp.myapp.bean.MessageListBo;
 import com.pcp.myapp.bean.SearchBo;
@@ -101,5 +102,20 @@ public class DataManager {
         String contentType = "application/json;charset=UTF-8";
         RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
         return apiService.commitAnswer(body);
+    }
+
+    public Observable<BaseResponse<List<ChatMsgBo>>> getMsgList(String student, String teacher, String id){
+        return apiService.getMsgList(student, teacher, id);
+    }
+
+    public Observable<BaseResponse<ChatMsgBo>> sendMessage(String send, String receive, String content){
+        HashMap<String, String> jsonMap = new HashMap();
+        jsonMap.put("send", send);
+        jsonMap.put("receive", receive);
+        jsonMap.put("content", content);
+        String json = new Gson().toJson(jsonMap);
+        String contentType = "application/json;charset=UTF-8";
+        RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
+        return apiService.sendMessage(body);
     }
 }

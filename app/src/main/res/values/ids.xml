@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="drag_handle" type="id"/>
+    <item name="cb_item_tag" type="id"/>
+    <item name="id_stickynavlayout_topview" type="id"/>
+    <item name="id_stickynavlayout_viewpager" type="id"/>
+    <item name="id_stickynavlayout_indicator" type="id"/>
+
+
+    <item name="tag_pickimg" type="id"/>
+    <item name="tag_pick_img_num" type="id"/>
+    <item name="tag_pick_video" type="id"/>
+
+    <item name="keyboard_layout_id" type="id"/>
+
+    <item name="shop_add_spellgroup" type="id"/>
+    <item name="shop_add_yunbishare" type="id"/>
+    <item name="shop_add_usermanager" type="id"/>
+    <item name="shop_add_performance" type="id"/>
+    <item name="shop_add_salesmanager" type="id"/>
+
+    <item name="shop_add_classroom" type="id"/>
+    <item name="shop_add_teacher" type="id"/>
+    <item name="shop_add_shareritual" type="id"/>
+    <item name="shop_address_manager" type="id"/>
+
+    <item name="shop_aftersales_manager" type="id"/>
+    <item name="shop_server_manager" type="id"/>
+    <item name="bar" type="id"/>
+
+    <!-- Glide使用 -->
+    <item name="glide_code" type="id"/>
+    <item name="glide_id" type="id"/>
+
+    <!--扫一扫-->
+    <item type="id" name="bgaqrcode_camera_preview" />
+</resources>

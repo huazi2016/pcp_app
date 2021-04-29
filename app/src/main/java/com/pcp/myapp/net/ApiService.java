@@ -1,6 +1,7 @@
 package com.pcp.myapp.net;
 
 import com.pcp.myapp.bean.ChatListBo;
+import com.pcp.myapp.bean.ChatMsgBo;
 import com.pcp.myapp.bean.LoginBo;
 import com.pcp.myapp.bean.MessageListBo;
 import com.pcp.myapp.bean.SearchBo;
@@ -71,4 +72,14 @@ public interface ApiService {
 
     @POST("/api/psy/test/answer")
     Observable<BaseResponse<String>> commitAnswer(@Body RequestBody body);
+
+    @GET("/api/chat/list")
+    Observable<BaseResponse<List<ChatMsgBo>>> getMsgList(
+            @Query("student") String student,
+            @Query("teacher") String teacher,
+            @Query("id") String id
+    );
+
+    @POST("/api/chat/send")
+    Observable<BaseResponse<ChatMsgBo>> sendMessage(@Body RequestBody body);
 }
