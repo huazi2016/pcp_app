@@ -11,4 +11,5 @@ public class ChatMsgBo {
     public String receive;
     public String time;
     public String content;
+    public int msgType = 0;
 }

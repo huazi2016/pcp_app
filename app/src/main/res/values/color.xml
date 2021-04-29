@@ -27,8 +27,10 @@
     <color name="card_grey_bg">#70616161</color>
     <color name="me_item">#FFFFFF</color>
     <color name="c_999999">#999999</color>
+    <color name="c_EEEEEE">#eeeeee</color>
     <color name="c_666666">#666666</color>
     <color name="c_333333">#333333</color>
     <color name="c_white">#FFFFFF</color>
     <color name="c_F4F4F4">#F4F4F4</color>
+    <color name="c_D4E8BD">#D4E8BD</color>
 </resources>

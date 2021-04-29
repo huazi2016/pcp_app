@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -39,43 +38,70 @@ import butterknife.BindView;
 
 import static com.pcp.myapp.base.application.MyApp.getContext;
 
-public class ChatActivity extends BaseActivity {
+public class InfoActivity extends BaseActivity {
 
     @BindView(R.id.ivCommonBack)
     AppCompatImageView ivCommonBack;
     @BindView(R.id.tvCommonTitle)
     AppCompatTextView tvCommonTitle;
-    @BindView(R.id.rcChatMsg)
-    RecyclerView rcChatMsg;
-    @BindView(R.id.chat_keyboaed_layout)
-    ChatKeyboardLayout chatkeyLayout;
-    @BindView(R.id.chat_rootview)
-    RelativeLayout chatRootview;
+    @BindView(R.id.rcInfoMsg)
+    RecyclerView rcInfoMsg;
+    @BindView(R.id.keyboardLayout)
+    ChatKeyboardLayout keyboardLayout;
 
     private MainPresenter msgPresenter;
     private final static String CHAT_ID = "chat_id";
-    private final static String TEACHER_NAME = "teacher_name";
+    private final static String PAGE_TYPE = "page_type";
+    private final static String INFO_NAME = "info_name";
+    private final static String INFO_CONTENT = "info_content";
     private MsgListAdapter msgAdapter;
     private final List<ChatMsgBo> dataList = new ArrayList();
     private String userName = "";
-    private String teacherName;
+    private String name;
     private String id;
+    private int pageType = 0; //0: 老师回复留言 1:学生留言
     private boolean isTeacher;
 
-    public static void launchActivity(Activity activity, String id, String name) {
-        Intent intent = new Intent(activity, ChatActivity.class);
+    public static void launchActivity(Activity activity, int type, String id, String name, String content) {
+        Intent intent = new Intent(activity, InfoActivity.class);
         intent.putExtra(CHAT_ID, id);
-        intent.putExtra(TEACHER_NAME, name);
+        intent.putExtra(PAGE_TYPE, type);
+        intent.putExtra(INFO_NAME, name);
+        intent.putExtra(INFO_CONTENT, content);
         activity.startActivity(intent);
+    }
+
+    public static void launchActivity(Activity activity, int type, String id, String name, String content, int code) {
+        Intent intent = new Intent(activity, InfoActivity.class);
+        intent.putExtra(CHAT_ID, id);
+        intent.putExtra(PAGE_TYPE, type);
+        intent.putExtra(INFO_NAME, name);
+        intent.putExtra(INFO_CONTENT, content);
+        activity.startActivityForResult(intent, code);
     }
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_chat;
+        return R.layout.activity_info01;
     }
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        if (getIntent() != null) {
+            id = getIntent().getStringExtra(CHAT_ID);
+            pageType = getIntent().getIntExtra(PAGE_TYPE, 0);
+            name = getIntent().getStringExtra(INFO_NAME);
+            String content = getIntent().getStringExtra(INFO_CONTENT);
+            tvCommonTitle.setText(name);
+
+            if (pageType == 0) {
+                dataList.clear();
+                ChatMsgBo msgBo = new ChatMsgBo();
+                msgBo.content = content;
+                msgBo.msgType = 0;
+                dataList.add(msgBo);
+            }
+        }
         initRecycleView();
         userName = MmkvUtil.getUserName();
         isTeacher = MmkvUtil.isTeacher();
@@ -85,18 +111,17 @@ public class ChatActivity extends BaseActivity {
                 finish();
             }
         });
-        chatkeyLayout.getInputEditText().setHint("请输入内容");
-        setKeyBoardListener();
-        if (getIntent() != null) {
-            id = getIntent().getStringExtra(CHAT_ID);
-            teacherName = getIntent().getStringExtra(TEACHER_NAME);
-            tvCommonTitle.setText(teacherName);
-            getMsgList(userName, teacherName, id);
+        String hint = "请回复留言";
+        if (pageType == 1) {
+            hint = "请输入留言内容";
         }
+        keyboardLayout.getInputEditText().setHint(hint);
+        keyboardLayout.popKeyboard();
+        setKeyBoardListener();
     }
 
     private void setKeyBoardListener() {
-        chatkeyLayout.setOnChatKeyBoardListener(new ChatKeyboardLayout.OnChatKeyBoardListener() {
+        keyboardLayout.setOnChatKeyBoardListener(new ChatKeyboardLayout.OnChatKeyBoardListener() {
             @Override
             public void onSendButtonClicked(ImageView sendBtn, HadEditText editText, ProgressBar progressBar, String text) {
                 //点击发送回调
@@ -104,7 +129,11 @@ public class ChatActivity extends BaseActivity {
                     ToastUtils.showShort("输入内容不能为空");
                 } else {
                     editText.setText("");
-                    sendMessage(userName, teacherName, text);
+                    if (pageType == 1) {
+                        replyTeacherMsg(text, userName, name);
+                    } else {
+                        replyMsg(text);
+                    }
                 }
             }
 
@@ -116,7 +145,7 @@ public class ChatActivity extends BaseActivity {
             @Override
             public void onKeyboardHeightChanged(int height) {
                 //键盘弹起回调
-                rcChatMsg.scrollToPosition(dataList.size() - 1);
+                rcInfoMsg.scrollToPosition(dataList.size() - 1);
             }
 
             @Override
@@ -137,25 +166,9 @@ public class ChatActivity extends BaseActivity {
     }
 
     private void initRecycleView() {
-        rcChatMsg.setLayoutManager(new LinearLayoutManager(getContext()));
-        msgAdapter = new MsgListAdapter(R.layout.item_chat_msg, dataList);
-        rcChatMsg.setAdapter(msgAdapter);
-    }
-
-    private void getMsgList(String student, String teacher, String id) {
-        msgPresenter.getMsgList(student, teacher, id, new NetCallBack<List<ChatMsgBo>>() {
-            @Override
-            public void onLoadSuccess(List<ChatMsgBo> resultList) {
-                dataList.addAll(resultList);
-                msgAdapter.notifyDataSetChanged();
-                rcChatMsg.scrollToPosition(dataList.size() - 1);
-            }
-
-            @Override
-            public void onLoadFailed(String errMsg) {
-                LogUtils.e("getMsgList_err==" + errMsg);
-            }
-        });
+        rcInfoMsg.setLayoutManager(new LinearLayoutManager(getContext()));
+        msgAdapter = new MsgListAdapter(R.layout.item_info_msg, dataList);
+        rcInfoMsg.setAdapter(msgAdapter);
     }
 
     private class MsgListAdapter extends BaseQuickAdapter<ChatMsgBo, BaseViewHolder> {
@@ -170,35 +183,54 @@ public class ChatActivity extends BaseActivity {
             LinearLayout llRightMsg = holder.getView(R.id.llRightMsg);
             AppCompatTextView tvLeftContent = holder.getView(R.id.tvLeftContent);
             AppCompatTextView tvRightContent = holder.getView(R.id.tvRightContent);
-            if (userName.equalsIgnoreCase(msgBo.send)) {
-                //自己发的信息
-                llLeftMsg.setVisibility(View.GONE);
-                llRightMsg.setVisibility(View.VISIBLE);
-                String sendText = msgBo.content + " :【" + userName + "】 ";
-                if (isTeacher) {
-                    sendText = msgBo.content + " :【" + userName + "老师】 ";
-                }
-                tvRightContent.setText(sendText);
-            } else {
-                //接收的信息
+            if (msgBo.msgType == 0) {
                 llLeftMsg.setVisibility(View.VISIBLE);
-                String receiveText = "【" + msgBo.receive + "老师】 " + msgBo.content;
-                if (isTeacher) {
-                    receiveText = "【" + msgBo.receive + "】 " + msgBo.content;
-                }
+                String receiveText = "【留言】 " + msgBo.content;
                 tvLeftContent.setText(receiveText);
                 llRightMsg.setVisibility(View.GONE);
+            } else {
+                llLeftMsg.setVisibility(View.GONE);
+                llRightMsg.setVisibility(View.VISIBLE);
+                String sendText = "【回复】 " + msgBo.content;
+                tvRightContent.setText(sendText);
             }
         }
     }
 
-    private void sendMessage(String send, String receive, String content) {
-        msgPresenter.sendMessage(send, receive, content, new NetCallBack<ChatMsgBo>() {
+    private void replyMsg(String reply) {
+        msgPresenter.replyMsg(id, reply, new NetCallBack<ChatMsgBo>() {
             @Override
             public void onLoadSuccess(ChatMsgBo msgBo) {
-                dataList.add(msgBo);
+                ChatMsgBo msgBo01 = new ChatMsgBo();
+                msgBo01.content = reply;
+                msgBo01.msgType = 1;
+                dataList.add(msgBo01);
                 msgAdapter.notifyDataSetChanged();
-                rcChatMsg.scrollToPosition(dataList.size() - 1);
+                rcInfoMsg.scrollToPosition(dataList.size() - 1);
+                ToastUtils.showShort("已回复留言");
+                setResult(RESULT_OK);
+                finish();
+            }
+
+            @Override
+            public void onLoadFailed(String errMsg) {
+                LogUtils.e("getMsgList_err==" + errMsg);
+            }
+        });
+    }
+
+    private void replyTeacherMsg(String reply, String student, String teacher) {
+        msgPresenter.replyTeacherMsg(reply, student, teacher, new NetCallBack<ChatMsgBo>() {
+            @Override
+            public void onLoadSuccess(ChatMsgBo msgBo) {
+                ChatMsgBo msgBo01 = new ChatMsgBo();
+                msgBo01.content = reply;
+                msgBo01.msgType = 1;
+                dataList.add(msgBo01);
+                msgAdapter.notifyDataSetChanged();
+                rcInfoMsg.scrollToPosition(dataList.size() - 1);
+                ToastUtils.showShort("留言完成");
+                finish();
             }
 
             @Override

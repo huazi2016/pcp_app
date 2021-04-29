@@ -433,6 +433,68 @@ public class MainPresenter extends BasePresenter<MainContract.View> {
                 });
     }
 
+    public void replyMsg(String id, String reply, NetCallBack<ChatMsgBo> callBack) {
+        Observable<BaseResponse<ChatMsgBo>> observable = dataManager.replyMsg(id, reply);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseResponse<ChatMsgBo>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onNext(@NotNull BaseResponse<ChatMsgBo> resultBo) {
+                        if (resultBo.getErrorCode() != 0) {
+                            callBack.onLoadFailed(resultBo.getErrorMsg());
+                            return;
+                        }
+                        callBack.onLoadSuccess(resultBo.getData());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callBack.onLoadFailed(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public void replyTeacherMsg(String content, String student, String teacher, NetCallBack<ChatMsgBo> callBack) {
+        Observable<BaseResponse<ChatMsgBo>> observable = dataManager.replyTeacherMsg(content, student, teacher);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseResponse<ChatMsgBo>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onNext(@NotNull BaseResponse<ChatMsgBo> resultBo) {
+                        if (resultBo.getErrorCode() != 0) {
+                            callBack.onLoadFailed(resultBo.getErrorMsg());
+                            return;
+                        }
+                        callBack.onLoadSuccess(resultBo.getData());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callBack.onLoadFailed(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
     @Override
     public void detachView() {
         super.detachView();

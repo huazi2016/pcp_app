@@ -3,6 +3,7 @@ package com.pcp.myapp.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,11 +17,11 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.pcp.myapp.R;
 import com.pcp.myapp.base.activity.BaseActivity;
 import com.pcp.myapp.bean.MessageListBo;
-import com.pcp.myapp.bean.SearchBo;
 import com.pcp.myapp.net.DataManager;
 import com.pcp.myapp.net.MainPresenter;
 import com.pcp.myapp.net.NetCallBack;
 import com.pcp.myapp.utils.LogUtils;
+import com.pcp.myapp.utils.MmkvUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -44,6 +45,7 @@ public class MessageActivity extends BaseActivity {
     private MainPresenter messagePresenter;
     private final List<MessageListBo> dataList = new ArrayList();
     private MessageListAdapter messageAdapter;
+    private boolean isStudent = false;
 
     public static void launchActivity(Activity activity) {
         Intent intent = new Intent(activity, MessageActivity.class);
@@ -58,10 +60,10 @@ public class MessageActivity extends BaseActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
         tvCommonTitle.setText("留言");
+        isStudent = MmkvUtil.isStudent();
         initRecycleView();
-        // TODO: 2021/4/28 模拟名称
-        //loadMessageList(MmkvUtil.getUserName());
-        loadMessageList("方玉龙");
+        //loadMessageList("方玉龙");
+        loadMessageList(MmkvUtil.getUserName());
     }
 
     @Override
@@ -82,9 +84,17 @@ public class MessageActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 9001) {
+            loadMessageList(MmkvUtil.getUserName());
+        }
+    }
+
     private void initRecycleView() {
         rcMessageList.setLayoutManager(new LinearLayoutManager(getContext()));
-        messageAdapter = new MessageListAdapter(R.layout.item_home_list, dataList);
+        messageAdapter = new MessageListAdapter(R.layout.item_msg_list, dataList);
         rcMessageList.setAdapter(messageAdapter);
     }
 
@@ -111,13 +121,27 @@ public class MessageActivity extends BaseActivity {
         }
 
         @Override
-        protected void convert(@NotNull BaseViewHolder holder, MessageListBo msgBo) {
-            //holder.setText(R.id.tvHomeName, searchBo.username);
-            //holder.setText(R.id.tvHomeTime, searchBo.time);
-            holder.setText(R.id.tvHomeTitle, msgBo.teacher);
-            holder.setText(R.id.tvHomeContent, msgBo.student);
+        protected void convert(@NotNull BaseViewHolder holder, final MessageListBo msgBo) {
+            AppCompatTextView tvMsgReply = holder.getView(R.id.tvMsgReply);
+            holder.setText(R.id.tvMsgContent, msgBo.content);
+            String name = msgBo.student;
+            if (isStudent) {
+                name = msgBo.teacher + "老师";
+            }
+            holder.setText(R.id.tvMsgName, name);
+            holder.setText(R.id.tvMsgTime, msgBo.time);
+            if (TextUtils.isEmpty(msgBo.reply)) {
+                tvMsgReply.setText("回复");
+                tvMsgReply.setBackgroundColor(activity.getResources().getColor(R.color.c_D4E8BD));
+            } else {
+                tvMsgReply.setText("已回复");
+                tvMsgReply.setBackgroundColor(activity.getResources().getColor(R.color.c_EEEEEE));
+            }
+            final String fName = name;
             holder.itemView.setOnClickListener(v -> {
-                //NewsActivity.launchActivity(activity, searchBo.id + "");
+                if (TextUtils.isEmpty(msgBo.reply)) {
+                    InfoActivity.launchActivity(activity, 0, msgBo.id + "", fName, msgBo.content, 9001);
+                }
             });
         }
     }

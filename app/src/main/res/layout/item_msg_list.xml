@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginBottom="10dp"
+    android:background="@color/white"
+    android:padding="10dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMsgContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:background="@color/c_F4F4F4"
+        android:padding="@dimen/dp10"
+        android:textColor="@color/c_333333"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="无敌内容" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMsgName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp08"
+        android:textColor="@color/c_666666"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMsgContent"
+        tools:text="名称" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMsgTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp06"
+        android:textColor="@color/c_666666"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@+id/tvMsgName"
+        app:layout_constraintTop_toBottomOf="@+id/tvMsgName"
+        tools:text="日期" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMsgReply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp08"
+        android:textColor="@color/c_666666"
+        android:textSize="13sp"
+        android:padding="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMsgContent"
+        tools:text="回复" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

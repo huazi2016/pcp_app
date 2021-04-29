@@ -23,6 +23,7 @@ import com.pcp.myapp.net.DataManager;
 import com.pcp.myapp.net.MainPresenter;
 import com.pcp.myapp.net.NetCallBack;
 import com.pcp.myapp.ui.activity.ChatActivity;
+import com.pcp.myapp.ui.activity.InfoActivity;
 import com.pcp.myapp.ui.activity.MessageActivity;
 import com.pcp.myapp.utils.LogUtils;
 import com.pcp.myapp.utils.MmkvUtil;
@@ -52,6 +53,7 @@ public class ChatFragment extends BaseFragment {
     private MainPresenter chatPresenter;
     private final List<ChatListBo> dataList = new ArrayList();
     private ChatListAdapter chatAdapter;
+    private boolean isTeacher = false;
 
     public static ChatFragment getInstance() {
         ChatFragment fragment = new ChatFragment();
@@ -71,6 +73,10 @@ public class ChatFragment extends BaseFragment {
     @Override
     protected void init() {
         initStatusBar();
+        isTeacher = MmkvUtil.isTeacher();
+        if (isTeacher) {
+            tvMessageBtn.setVisibility(View.VISIBLE);
+        }
         initRecycleView();
         String role = MmkvUtil.TEACHER;
         if (MmkvUtil.isTeacher()) {
@@ -122,8 +128,6 @@ public class ChatFragment extends BaseFragment {
 
         @Override
         protected void convert(@NotNull BaseViewHolder holder, ChatListBo chatBo) {
-            //holder.setText(R.id.tvHomeName, searchBo.username);
-            //holder.setText(R.id.tvHomeTime, searchBo.time);
             holder.setText(R.id.tvChatName, chatBo.username);
             String text01 = "离线";
             if (!TextUtils.isEmpty(chatBo.onlineTime)) {
@@ -137,11 +141,16 @@ public class ChatFragment extends BaseFragment {
                     ChatActivity.launchActivity(activity, chatBo.id + "", chatBo.username);
                 }
             });
+            int visibility = View.VISIBLE;
+            if (isTeacher) {
+                visibility = View.GONE;
+            }
+            holder.getView(R.id.tvChatBtn02).setVisibility(visibility);
             holder.getView(R.id.tvChatBtn02).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //留言
-                    ToastUtils.showShort("留言");
+                    InfoActivity.launchActivity(activity, 1, chatBo.id + "", chatBo.username, "");
                 }
             });
         }

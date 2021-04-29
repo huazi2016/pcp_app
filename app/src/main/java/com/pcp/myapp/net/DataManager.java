@@ -7,6 +7,7 @@ import com.pcp.myapp.bean.LoginBo;
 import com.pcp.myapp.bean.MessageListBo;
 import com.pcp.myapp.bean.SearchBo;
 import com.pcp.myapp.bean.SearchTestBo;
+import com.pcp.myapp.utils.LogUtils;
 import com.pcp.myapp.utils.MmkvUtil;
 
 import org.json.JSONException;
@@ -15,6 +16,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import io.reactivex.Observable;
 import okhttp3.MediaType;
@@ -33,6 +35,7 @@ public class DataManager {
         jsonMap.put("username", username);
         jsonMap.put("password", password);
         String json = new Gson().toJson(jsonMap);
+        LogUtils.d("okhttp:==" + json);
         String contentType = "application/json;charset=UTF-8";
         RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
         return apiService.login(body);
@@ -44,6 +47,7 @@ public class DataManager {
         jsonMap.put("password", password);
         jsonMap.put("role", role);
         String json = new Gson().toJson(jsonMap);
+        LogUtils.d("okhttp:==" + json);
         String contentType = "application/json;charset=UTF-8";
         RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
         return apiService.register(body);
@@ -58,6 +62,7 @@ public class DataManager {
         jsonMap.put("category", category);
         jsonMap.put("keyword", keyword);
         String json = new Gson().toJson(jsonMap);
+        LogUtils.d("okhttp:==" + json);
         String contentType = "application/json;charset=UTF-8";
         RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
         return apiService.search(body);
@@ -73,6 +78,7 @@ public class DataManager {
         jsonMap.put("keyword", keyword);
         String json = new Gson().toJson(jsonMap);
         String contentType = "application/json;charset=UTF-8";
+        LogUtils.d("okhttp:==" + json);
         RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
         return apiService.searchTest(body);
     }
@@ -99,6 +105,7 @@ public class DataManager {
         jsonMap.put("username", MmkvUtil.getUserName());
         jsonMap.put("answer", answer);
         String json = new Gson().toJson(jsonMap);
+        LogUtils.d("okhttp:==" + json);
         String contentType = "application/json;charset=UTF-8";
         RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
         return apiService.commitAnswer(body);
@@ -114,8 +121,32 @@ public class DataManager {
         jsonMap.put("receive", receive);
         jsonMap.put("content", content);
         String json = new Gson().toJson(jsonMap);
+        LogUtils.d("okhttp:==" + json);
         String contentType = "application/json;charset=UTF-8";
         RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
         return apiService.sendMessage(body);
+    }
+
+    public Observable<BaseResponse<ChatMsgBo>> replyMsg(String id, String reply){
+        HashMap<String, String> jsonMap = new HashMap();
+        jsonMap.put("id", id);
+        jsonMap.put("reply", reply);
+        String json = new Gson().toJson(jsonMap);
+        LogUtils.d("okhttp:==" + json);
+        String contentType = "application/json;charset=UTF-8";
+        RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
+        return apiService.replyMsg(body);
+    }
+
+    public Observable<BaseResponse<ChatMsgBo>> replyTeacherMsg(String content, String student, String teacher) {
+        HashMap<String, String> jsonMap = new HashMap();
+        jsonMap.put("content", content);
+        jsonMap.put("student", student);
+        jsonMap.put("teacher", teacher);
+        String json = new Gson().toJson(jsonMap);
+        LogUtils.d("okhttp:==" + json);
+        String contentType = "application/json;charset=UTF-8";
+        RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
+        return apiService.replyTeacherMsg(body);
     }
 }
