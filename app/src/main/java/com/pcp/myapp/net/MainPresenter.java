@@ -588,8 +588,8 @@ public class MainPresenter extends BasePresenter<MainContract.View> {
                 });
     }
 
-    public void addComments(String id, NetCallBack<SearchBo> callBack) {
-        Observable<BaseResponse<SearchBo>> observable = dataManager.addComments(id);
+    public void addComments(String id, String content, String username, NetCallBack<SearchBo> callBack) {
+        Observable<BaseResponse<SearchBo>> observable = dataManager.addComments(id, content, username);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseResponse<SearchBo>>() {
@@ -619,8 +619,8 @@ public class MainPresenter extends BasePresenter<MainContract.View> {
                 });
     }
 
-    public void deleteComments(String id, String content, String username, NetCallBack<SearchBo> callBack) {
-        Observable<BaseResponse<SearchBo>> observable = dataManager.deleteComments(id, content, username);
+    public void deleteComments(String id, NetCallBack<SearchBo> callBack) {
+        Observable<BaseResponse<SearchBo>> observable = dataManager.deleteComments(id);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseResponse<SearchBo>>() {

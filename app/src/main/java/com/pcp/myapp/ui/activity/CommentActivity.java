@@ -11,8 +11,12 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.interfaces.OnCancelListener;
+import com.lxj.xpopup.interfaces.OnConfirmListener;
 import com.pcp.myapp.R;
 import com.pcp.myapp.base.activity.BaseActivity;
 import com.pcp.myapp.bean.MessageListBo;
@@ -45,10 +49,11 @@ public class CommentActivity extends BaseActivity {
     private CommentListAdapter commentAdapter;
     private boolean isStudent = false;
     private String id = "";
+    private final static String COMMENT_ID = "comment_id";
 
     public static void launchActivity(Activity activity, String id) {
         Intent intent = new Intent(activity, CommentActivity.class);
-        intent.putExtra("", id);
+        intent.putExtra(COMMENT_ID, id);
         activity.startActivity(intent);
     }
 
@@ -61,11 +66,10 @@ public class CommentActivity extends BaseActivity {
     protected void init(Bundle savedInstanceState) {
         tvCommonTitle.setText("评论");
         isStudent = MmkvUtil.isStudent();
-        if (getIntent() != null) {
-            //id = getIntent().getStringArrayExtra();
-        }
         initRecycleView();
-        //loadMessageList("方玉龙");
+        if (getIntent() != null) {
+            id = getIntent().getStringExtra(COMMENT_ID);
+        }
         getCommentsList();
     }
 
@@ -87,23 +91,13 @@ public class CommentActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == 9001) {
-            getCommentsList();
-        }
-    }
-
     private void initRecycleView() {
         rcMessageList.setLayoutManager(new LinearLayoutManager(getContext()));
-        commentAdapter = new CommentListAdapter(R.layout.item_msg_list, dataList);
+        commentAdapter = new CommentListAdapter(R.layout.item_comment_list, dataList);
         rcMessageList.setAdapter(commentAdapter);
     }
 
     private void getCommentsList() {
-        // TODO: 2021/4/29 模拟id
-        id = "1";
         commentPresenter.getCommentsList(id, new NetCallBack<List<SearchBo>>() {
             @Override
             public void onLoadSuccess(List<SearchBo> resultList) {
@@ -114,6 +108,22 @@ public class CommentActivity extends BaseActivity {
 
             @Override
             public void onLoadFailed(String errMsg) {
+                LogUtils.e("getCommentsList_err==" + errMsg);
+            }
+        });
+    }
+
+    private void deleteComments(String id) {
+        commentPresenter.deleteComments(id, new NetCallBack<SearchBo>() {
+            @Override
+            public void onLoadSuccess(SearchBo resultList) {
+                ToastUtils.showShort("删除成功");
+                getCommentsList();
+            }
+
+            @Override
+            public void onLoadFailed(String errMsg) {
+                ToastUtils.showShort("删除失败, 请稍后重试!");
                 LogUtils.e("getCommentsList_err==" + errMsg);
             }
         });
@@ -130,5 +140,20 @@ public class CommentActivity extends BaseActivity {
             //AppCompatTextView tvMsgReply = holder.getView(R.id.tvMsgReply);
             holder.setText(R.id.tvMsgContent, msgBo.content);
         }
+    }
+
+    private void showConfirmDialog(final String id) {
+        new XPopup.Builder(activity).asConfirm("", "确定删除吗?", "取消", "确定",
+                new OnConfirmListener() {
+                    @Override
+                    public void onConfirm() {
+                        deleteComments(id);
+                    }
+                }, new OnCancelListener() {
+                    @Override
+                    public void onCancel() {
+
+                    }
+                }, false).show();
     }
 }

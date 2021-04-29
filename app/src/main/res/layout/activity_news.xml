@@ -93,4 +93,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         tools:visibility="visible" />
 
+    <com.pcp.myapp.custom.chat.ChatKeyboardLayout
+        android:id="@+id/keyboardLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/clCommonTitle"
+        android:visibility="gone"
+        app:keyboardStyle="chat_style"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:sendButtonBackground="@drawable/send_button_bg"
+        app:sendButtonTextColor="#FFFFFF"
+        app:showRightIcon="true"
+        tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

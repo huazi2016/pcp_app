@@ -175,21 +175,7 @@ public class DataManager {
         return apiService.getCommentsList(id);
     }
 
-    //public Observable<BaseResponse<SearchBo>> addComments(String id){
-    //    HashMap<String, String> jsonMap = new HashMap();
-    //    jsonMap.put("id", id);
-    //    String json = new Gson().toJson(jsonMap);
-    //    LogUtils.d("okhttp:==" + json);
-    //    String contentType = "application/json;charset=UTF-8";
-    //    RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
-    //    return apiService.addComments(body);
-    //}
-
-    public Observable<BaseResponse<SearchBo>> addComments(String id){
-        return apiService.addComments(id);
-    }
-
-    public Observable<BaseResponse<SearchBo>> deleteComments(String id, String content, String username){
+    public Observable<BaseResponse<SearchBo>> addComments(String id, String content, String username){
         HashMap<String, String> jsonMap = new HashMap();
         jsonMap.put("articleId", id);
         jsonMap.put("content", content);
@@ -198,6 +184,10 @@ public class DataManager {
         LogUtils.d("okhttp:==" + json);
         String contentType = "application/json;charset=UTF-8";
         RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
-        return apiService.deleteComments(body);
+        return apiService.addComments(body);
+    }
+
+    public Observable<BaseResponse<SearchBo>> deleteComments(String id){
+        return apiService.deleteComments(id);
     }
 }

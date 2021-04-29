@@ -5,9 +5,9 @@
     android:id="@+id/clCommonTitle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="5dp"
     android:background="@color/colorPrimary"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -28,16 +28,35 @@
             android:id="@+id/tvCommonTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/c_white"
-            android:textSize="16sp"
+            android:ellipsize="end"
             android:maxEms="15"
             android:maxLines="1"
-            android:ellipsize="end"
+            android:textColor="@color/c_white"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/app_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCommRightBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:background="@color/c_DC9327"
+            android:paddingLeft="@dimen/dp12"
+            android:paddingTop="@dimen/dp06"
+            android:paddingRight="@dimen/dp12"
+            android:paddingBottom="@dimen/dp06"
+            android:text="全部评论"
+            android:textSize="@dimen/sp14"
+            android:textColor="@color/c_white"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clCommonRight"

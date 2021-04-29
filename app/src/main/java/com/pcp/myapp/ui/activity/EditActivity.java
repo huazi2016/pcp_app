@@ -66,7 +66,7 @@ public class EditActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        tvCommonTitle.setText("新增文章");
+        tvCommonTitle.setText("发布文章");
         String name = "发布者: " + MmkvUtil.getUserName();
         String time = "      日期: " + TimeUtil.getNowDate();
         tvPbName.setText(name + time);

@@ -102,14 +102,11 @@ public interface ApiService {
             @Query("articleId") String id
     );
 
-    @GET("/api/comment/add")
-    Observable<BaseResponse<SearchBo>> addComments(
-            @Query("id") String id
-    );
-
     @POST("/api/comment/add")
     Observable<BaseResponse<SearchBo>> addComments(@Body RequestBody body);
 
-    @POST("/api/comment/delete")
-    Observable<BaseResponse<SearchBo>> deleteComments(@Body RequestBody body);
+    @GET("/api/comment/delete")
+    Observable<BaseResponse<SearchBo>> deleteComments(
+            @Query("id") String id
+    );
 }
