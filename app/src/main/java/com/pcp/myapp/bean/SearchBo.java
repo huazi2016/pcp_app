@@ -6,7 +6,8 @@ package com.pcp.myapp.bean;
  * desc   :
  */
 public class SearchBo {
-    public Integer id;
+    public int id;
+    public int articleId;
     public String category;
     public String title;
     public String username;

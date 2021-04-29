@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,58 +12,85 @@
 
     <include layout="@layout/common_title_layout" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:id="@+id/llContentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp">
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clCommonTitle">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvNewsCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#62CC66"
+                android:padding="8dp"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="校园快讯" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvNewsName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/c_333333"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/tvNewsCategory"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="作者" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvNewsTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/c_999999"
+                android:textSize="13sp"
+                app:layout_constraintStart_toEndOf="@+id/tvNewsCategory"
+                app:layout_constraintTop_toBottomOf="@+id/tvNewsName"
+                tools:text="发布时间" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:visibility="invisible"
-            android:id="@+id/tvNewsCategory"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvNewsContent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#62CC66"
-            android:padding="8dp"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="校园快讯" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvNewsName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:textColor="@color/c_333333"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/tvNewsCategory"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="作者" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvNewsTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="3dp"
-            android:textColor="@color/c_999999"
-            android:textSize="13sp"
-            app:layout_constraintStart_toEndOf="@+id/tvNewsCategory"
             app:layout_constraintTop_toBottomOf="@+id/tvNewsName"
-            tools:text="发布时间" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            tools:text="我是内容" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp50" />
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvNewsContent"
+        android:id="@+id/tvDeleteBtn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:textColor="@color/c_333333"
+        android:layout_height="@dimen/dp40"
+        android:background="@color/holo_red_light"
+        android:gravity="center"
+        android:text="删除"
+        android:textColor="@color/c_white"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/tvNewsCategory"
-        app:layout_constraintTop_toBottomOf="@+id/tvNewsName"
-        tools:text="我是内容" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:visibility="visible" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

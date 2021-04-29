@@ -91,4 +91,25 @@ public interface ApiService {
 
     @POST("/api/article/add")
     Observable<BaseResponse<SearchBo>> addNews(@Body RequestBody body);
+
+    @GET("/api/article/delete")
+    Observable<BaseResponse<SearchBo>> deleteNews(
+            @Query("id") String id
+    );
+
+    @GET("/api/comment/list")
+    Observable<BaseResponse<SearchBo>> getCommentsList(
+            @Query("articleId") String id
+    );
+
+    @GET("/api/comment/add")
+    Observable<BaseResponse<SearchBo>> addComments(
+            @Query("id") String id
+    );
+
+    @POST("/api/comment/add")
+    Observable<BaseResponse<SearchBo>> addComments(@Body RequestBody body);
+
+    @POST("/api/comment/delete")
+    Observable<BaseResponse<SearchBo>> deleteComments(@Body RequestBody body);
 }

@@ -21,6 +21,10 @@ import java.util.logging.Logger;
 import io.reactivex.Observable;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public class DataManager {
 
@@ -161,5 +165,39 @@ public class DataManager {
         String contentType = "application/json;charset=UTF-8";
         RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
         return apiService.addNews(body);
+    }
+
+    public Observable<BaseResponse<SearchBo>> deleteNews(String id){
+        return apiService.deleteNews(id);
+    }
+
+    public Observable<BaseResponse<SearchBo>> getCommentsList(String id){
+        return apiService.getCommentsList(id);
+    }
+
+    //public Observable<BaseResponse<SearchBo>> addComments(String id){
+    //    HashMap<String, String> jsonMap = new HashMap();
+    //    jsonMap.put("id", id);
+    //    String json = new Gson().toJson(jsonMap);
+    //    LogUtils.d("okhttp:==" + json);
+    //    String contentType = "application/json;charset=UTF-8";
+    //    RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
+    //    return apiService.addComments(body);
+    //}
+
+    public Observable<BaseResponse<SearchBo>> addComments(String id){
+        return apiService.addComments(id);
+    }
+
+    public Observable<BaseResponse<SearchBo>> deleteComments(String id, String content, String username){
+        HashMap<String, String> jsonMap = new HashMap();
+        jsonMap.put("articleId", id);
+        jsonMap.put("content", content);
+        jsonMap.put("username", username);
+        String json = new Gson().toJson(jsonMap);
+        LogUtils.d("okhttp:==" + json);
+        String contentType = "application/json;charset=UTF-8";
+        RequestBody body = RequestBody.create(MediaType.parse(contentType), json);
+        return apiService.deleteComments(body);
     }
 }

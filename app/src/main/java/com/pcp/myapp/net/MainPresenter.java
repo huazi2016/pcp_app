@@ -526,6 +526,130 @@ public class MainPresenter extends BasePresenter<MainContract.View> {
                 });
     }
 
+    public void deleteNews(String id, NetCallBack<SearchBo> callBack) {
+        Observable<BaseResponse<SearchBo>> observable = dataManager.deleteNews(id);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseResponse<SearchBo>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onNext(@NotNull BaseResponse<SearchBo> resultBo) {
+                        if (resultBo.getErrorCode() != 0) {
+                            callBack.onLoadFailed(resultBo.getErrorMsg());
+                            return;
+                        }
+                        callBack.onLoadSuccess(resultBo.getData());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callBack.onLoadFailed(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public void getCommentsList(String id, NetCallBack<SearchBo> callBack) {
+        Observable<BaseResponse<SearchBo>> observable = dataManager.getCommentsList(id);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseResponse<SearchBo>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onNext(@NotNull BaseResponse<SearchBo> resultBo) {
+                        if (resultBo.getErrorCode() != 0) {
+                            callBack.onLoadFailed(resultBo.getErrorMsg());
+                            return;
+                        }
+                        callBack.onLoadSuccess(resultBo.getData());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callBack.onLoadFailed(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public void addComments(String id, NetCallBack<SearchBo> callBack) {
+        Observable<BaseResponse<SearchBo>> observable = dataManager.addComments(id);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseResponse<SearchBo>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onNext(@NotNull BaseResponse<SearchBo> resultBo) {
+                        if (resultBo.getErrorCode() != 0) {
+                            callBack.onLoadFailed(resultBo.getErrorMsg());
+                            return;
+                        }
+                        callBack.onLoadSuccess(resultBo.getData());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callBack.onLoadFailed(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public void deleteComments(String id, String content, String username, NetCallBack<SearchBo> callBack) {
+        Observable<BaseResponse<SearchBo>> observable = dataManager.deleteComments(id, content, username);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseResponse<SearchBo>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onNext(@NotNull BaseResponse<SearchBo> resultBo) {
+                        if (resultBo.getErrorCode() != 0) {
+                            callBack.onLoadFailed(resultBo.getErrorMsg());
+                            return;
+                        }
+                        callBack.onLoadSuccess(resultBo.getData());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callBack.onLoadFailed(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
     @Override
     public void detachView() {
         super.detachView();
