@@ -137,8 +137,16 @@ public class CommentActivity extends BaseActivity {
 
         @Override
         protected void convert(@NotNull BaseViewHolder holder, final SearchBo msgBo) {
-            //AppCompatTextView tvMsgReply = holder.getView(R.id.tvMsgReply);
-            holder.setText(R.id.tvMsgContent, msgBo.content);
+            AppCompatTextView tvCommentDelete = holder.getView(R.id.tvCommentDelete);
+            holder.setText(R.id.tvCommentContent, msgBo.content);
+            holder.setText(R.id.tvCommentTime, "日期: " + msgBo.time);
+            holder.setText(R.id.tvCommentName, "评论人: " + msgBo.username);
+            tvCommentDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showConfirmDialog(msgBo.id + "");
+                }
+            });
         }
     }
 
