@@ -54,6 +54,7 @@ public class ChatFragment extends BaseFragment {
     private final List<ChatListBo> dataList = new ArrayList();
     private ChatListAdapter chatAdapter;
     private boolean isTeacher = false;
+    private String mRole;
 
     public static ChatFragment getInstance() {
         ChatFragment fragment = new ChatFragment();
@@ -78,11 +79,11 @@ public class ChatFragment extends BaseFragment {
             tvMessageBtn.setVisibility(View.VISIBLE);
         }
         initRecycleView();
-        String role = MmkvUtil.TEACHER;
+        mRole = MmkvUtil.TEACHER;
         if (MmkvUtil.isTeacher()) {
-            role = MmkvUtil.STUDENT;
+            mRole = MmkvUtil.STUDENT;
         }
-        loadChatList(role);
+        loadChatList(mRole);
     }
 
     private void initRecycleView() {
@@ -93,11 +94,15 @@ public class ChatFragment extends BaseFragment {
         rcChatList.setAdapter(chatAdapter);
     }
 
-    @OnClick({R.id.tvMessageBtn})
+    @OnClick({R.id.tvMessageBtn, R.id.tvChatRrefresh})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvMessageBtn: {
                 MessageActivity.launchActivity(activity);
+                break;
+            }
+            case R.id.tvChatRrefresh: {
+                loadChatList(mRole);
                 break;
             }
             default: {
