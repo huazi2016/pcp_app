@@ -170,24 +170,36 @@ public class ChatActivity extends BaseActivity {
             LinearLayout llRightMsg = holder.getView(R.id.llRightMsg);
             AppCompatTextView tvLeftContent = holder.getView(R.id.tvLeftContent);
             AppCompatTextView tvRightContent = holder.getView(R.id.tvRightContent);
-            if (userName.equalsIgnoreCase(msgBo.send)) {
-                //自己发的信息
-                llLeftMsg.setVisibility(View.GONE);
-                llRightMsg.setVisibility(View.VISIBLE);
-                String sendText = msgBo.content + " :【" + userName + "】 ";
-                if (isTeacher) {
-                    sendText = msgBo.content + " :【" + userName + "老师】 ";
+            if (isTeacher) {
+                //老师
+                if (userName.equalsIgnoreCase(msgBo.send)) {
+                    //自己发的信息
+                    llLeftMsg.setVisibility(View.GONE);
+                    llRightMsg.setVisibility(View.VISIBLE);
+                    String sendText = msgBo.content + " :【" + msgBo.send + "老师】 ";
+                    tvRightContent.setText(sendText);
+                } else {
+                    //学生发的信息
+                    llLeftMsg.setVisibility(View.VISIBLE);
+                    llRightMsg.setVisibility(View.GONE);
+                    String receiveText = "【" + msgBo.send + "】 " + msgBo.content;
+                    tvLeftContent.setText(receiveText);
                 }
-                tvRightContent.setText(sendText);
             } else {
-                //接收的信息
-                llLeftMsg.setVisibility(View.VISIBLE);
-                String receiveText = "【" + msgBo.receive + "老师】 " + msgBo.content;
-                if (isTeacher) {
-                    receiveText = "【" + msgBo.receive + "】 " + msgBo.content;
+                //学生或其他
+                if (userName.equalsIgnoreCase(msgBo.send)) {
+                    //自己发的信息
+                    llLeftMsg.setVisibility(View.GONE);
+                    llRightMsg.setVisibility(View.VISIBLE);
+                    String sendText = msgBo.content + " :【" + msgBo.send + "】 ";
+                    tvRightContent.setText(sendText);
+                } else {
+                    //老师发的信息
+                    llLeftMsg.setVisibility(View.VISIBLE);
+                    llRightMsg.setVisibility(View.GONE);
+                    String receiveText = "【" + msgBo.send + "老师】 " + msgBo.content;
+                    tvLeftContent.setText(receiveText);
                 }
-                tvLeftContent.setText(receiveText);
-                llRightMsg.setVisibility(View.GONE);
             }
         }
     }
