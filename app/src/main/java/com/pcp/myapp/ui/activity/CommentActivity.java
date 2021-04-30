@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.CollectionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
@@ -43,11 +45,14 @@ public class CommentActivity extends BaseActivity {
     RecyclerView rcMessageList;
     @BindView(R.id.tvCommonTitle)
     AppCompatTextView tvCommonTitle;
+    @BindView(R.id.layout_error)
+    ViewGroup errorLayout;
 
     private MainPresenter commentPresenter;
     private final List<SearchBo> dataList = new ArrayList();
     private CommentListAdapter commentAdapter;
     private boolean isStudent = false;
+    private boolean isAdmin = false;
     private String id = "";
     private final static String COMMENT_ID = "comment_id";
 
@@ -66,6 +71,7 @@ public class CommentActivity extends BaseActivity {
     protected void init(Bundle savedInstanceState) {
         tvCommonTitle.setText("评论");
         isStudent = MmkvUtil.isStudent();
+        isAdmin = MmkvUtil.isAdmin();
         initRecycleView();
         if (getIntent() != null) {
             id = getIntent().getStringExtra(COMMENT_ID);
@@ -101,13 +107,22 @@ public class CommentActivity extends BaseActivity {
         commentPresenter.getCommentsList(id, new NetCallBack<List<SearchBo>>() {
             @Override
             public void onLoadSuccess(List<SearchBo> resultList) {
-                dataList.clear();
-                dataList.addAll(resultList);
-                commentAdapter.notifyDataSetChanged();
+                if (CollectionUtils.isNotEmpty(resultList)) {
+                    errorLayout.setVisibility(View.GONE);
+                    rcMessageList.setVisibility(View.VISIBLE);
+                    dataList.clear();
+                    dataList.addAll(resultList);
+                    commentAdapter.notifyDataSetChanged();
+                } else {
+                    errorLayout.setVisibility(View.VISIBLE);
+                    rcMessageList.setVisibility(View.GONE);
+                }
             }
 
             @Override
             public void onLoadFailed(String errMsg) {
+                errorLayout.setVisibility(View.VISIBLE);
+                rcMessageList.setVisibility(View.GONE);
                 LogUtils.e("getCommentsList_err==" + errMsg);
             }
         });
@@ -141,6 +156,11 @@ public class CommentActivity extends BaseActivity {
             holder.setText(R.id.tvCommentContent, msgBo.content);
             holder.setText(R.id.tvCommentTime, "日期: " + msgBo.time);
             holder.setText(R.id.tvCommentName, "评论人: " + msgBo.username);
+            if (isAdmin) {
+                tvCommentDelete.setVisibility(View.VISIBLE);
+            } else {
+                tvCommentDelete.setVisibility(View.INVISIBLE);
+            }
             tvCommentDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

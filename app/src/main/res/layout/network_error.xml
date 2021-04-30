@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="12dp"
-        android:text="@string/network_error"
+        android:text="暂无评论"
         android:textColor="@color/textTipColor"
         android:textSize="14dp" />
 
@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:text="@string/error_refresh"
+        android:visibility="gone"
         android:textColor="@color/textTipColor"
         android:textSize="12dp" />
 </LinearLayout>
