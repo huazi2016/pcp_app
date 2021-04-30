@@ -123,6 +123,8 @@ public class HomeFragment extends BaseFragment {
     private void initRecycleView() {
         rcHomeList.setLayoutManager(new LinearLayoutManager(getContext()));
         homeAdapter = new HomeListAdapter(R.layout.item_home_list, dataList);
+        View footView = getLayoutInflater().inflate(R.layout.common_footview, null);
+        homeAdapter.addFooterView(footView);
         rcHomeList.setAdapter(homeAdapter);
     }
 

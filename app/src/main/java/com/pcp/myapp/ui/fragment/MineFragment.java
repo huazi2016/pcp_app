@@ -45,7 +45,6 @@ public class MineFragment extends BaseFragment {
         tvMineName.setText(MmkvUtil.getUserName());
 
     }
-
     @OnClick({R.id.clMineItem02})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -54,6 +53,8 @@ public class MineFragment extends BaseFragment {
                         new OnConfirmListener() {
                             @Override
                             public void onConfirm() {
+                                MmkvUtil.saveRole("");
+                                MmkvUtil.saveUserName("");
                                 LoginActivity.launchActivity(activity);
                                 activity.finish();
                             }

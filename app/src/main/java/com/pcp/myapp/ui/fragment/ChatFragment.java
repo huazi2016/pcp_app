@@ -88,6 +88,8 @@ public class ChatFragment extends BaseFragment {
     private void initRecycleView() {
         rcChatList.setLayoutManager(new LinearLayoutManager(getContext()));
         chatAdapter = new ChatListAdapter(R.layout.item_chat_list, dataList);
+        View footView = getLayoutInflater().inflate(R.layout.common_footview, null);
+        chatAdapter.addFooterView(footView);
         rcChatList.setAdapter(chatAdapter);
     }
 

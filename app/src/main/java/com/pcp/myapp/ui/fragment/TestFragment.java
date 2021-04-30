@@ -105,6 +105,8 @@ public class TestFragment extends BaseFragment {
     private void initRecycleView() {
         rcTestList.setLayoutManager(new LinearLayoutManager(getContext()));
         testAdapter = new TestListAdapter(R.layout.item_test_list, dataList);
+        View footView = getLayoutInflater().inflate(R.layout.common_footview, null);
+        testAdapter.addFooterView(footView);
         rcTestList.setAdapter(testAdapter);
     }
 

@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
@@ -13,6 +14,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.pcp.myapp.R;
 import com.pcp.myapp.base.utils.Utils;
 import com.pcp.myapp.bean.EventBo;
+import com.pcp.myapp.utils.MmkvUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -64,7 +66,12 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                String userName = MmkvUtil.getUserName();
+                if (!TextUtils.isEmpty(userName)) {
+                    MainActivity.launchActivity(SplashActivity.this);
+                } else {
+                    LoginActivity.launchActivity(SplashActivity.this);
+                }
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
 

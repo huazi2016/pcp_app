@@ -15,10 +15,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="xx老师"
+        android:layout_marginLeft="@dimen/dp05"
         android:textColor="@color/c_666666"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -41,7 +41,7 @@
         android:paddingBottom="@dimen/dp05"
         android:paddingLeft="@dimen/dp12"
         android:paddingRight="@dimen/dp12"
-        android:background="#D5678C"
+        android:background="#9A67F4"
         android:layout_marginTop="@dimen/dp12"
         android:textColor="@color/c_white"
         android:textSize="16sp"
@@ -54,8 +54,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="留言"
-        android:background="#8E61DD"
-        android:visibility="gone"
+        android:background="#EAC760"
+        tools:visibility="visible"
         android:paddingTop="@dimen/dp05"
         android:paddingBottom="@dimen/dp05"
         android:paddingLeft="@dimen/dp12"

@@ -74,7 +74,6 @@ public class TestActivity extends BaseActivity {
             if (!TextUtils.isEmpty(answer)) {
                 tvTestContent.setText(answer);
             }
-            etTestAnswer.setVisibility(View.VISIBLE);
             loadAnswer(id);
         }
     }
